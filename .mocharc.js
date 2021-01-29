@@ -1,5 +1,9 @@
 module.exports = {
     
+    //Define Environment
+    HOSTNAME : process.env.HOSTNAME ? process.env.HOSTNAME : 'http://localhost',
+    PORT: process.env.PORT ? process.env.PORT : ':8000',
+
     //Define specs for test execution.[array]
     spec: "test/specs/**/*.spec.js",
     
@@ -13,6 +17,8 @@ module.exports = {
     reporter: 'mochawesome',
     'reporter-option': [
         'overwrite=true',
+        'reportDir=api-test-report',
+        'reportFilename=report',
         'reportTitle=API Test Report',
         'reportPageTitle=API Test Report',
         'showPassed=true'
