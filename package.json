@@ -1,0 +1,50 @@
+{
+  "name": "api-test-suite-mocha",
+  "version": "1.0.0",
+  "description": "API Test Suite using Mocha Test Freamework",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himanshujane/api-test-suite-mocha.git"
+  },
+  "author": "Himanshu Jain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/himanshujane/api-test-suite-mocha/issues"
+  },
+  "homepage": "https://github.com/himanshujane/api-test-suite-mocha#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
+    "chai": "^4.2.0",
+    "chai-json-schema": "^1.5.1",
+    "faker": "^5.2.0",
+    "mocha": "^8.2.1",
+    "mochawesome": "^6.2.1",
+    "node-fetch": "^2.6.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  },
+  "mocha": {
+    "require": [
+      "@babel/register",
+      "mochawesome/register",
+      "hooks.mjs"
+    ]
+  }
+}
