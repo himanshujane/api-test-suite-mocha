@@ -28,7 +28,7 @@ module.exports = {
     slow: 200,
 
     //Specify test timeout threshold (in milliseconds) [number]
-    timeout: 60000,
+    timeout: 90000,
 
     //Specify user interface [string]
     ui: 'bdd',
