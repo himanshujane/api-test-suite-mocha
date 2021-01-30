@@ -93,7 +93,7 @@ class AuthData extends BaseData {
                 {
                     testName: "Input Name and password as number only",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeNumber,
+                        [this._registerUserText.name]: this.fakeNumber(6),
                         [this._registerUserText.email]: this.fakeEmail,
                         [this._registerUserText.password]: "12345678",
                         [this._registerUserText.password_confirmation]: "12345678"

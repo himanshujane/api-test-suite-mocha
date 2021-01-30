@@ -17,18 +17,17 @@ describe('Test User Registration - Endpoint: ' + endpoints.registerUserURL, func
             const res = await authHelper.registerUser(this, reqData)
 
             //Asserting the Response
-            assert.jsonSchema(await res.body, authData._registerUser.registerUserSchema)
-            assert.equal(await res.status, authData.status.status201)
-            assert.equal(await res.statusText, authData.status.status201Text)
-            assert.equal(await res.body.token_type, 'bearer')
-            assert.isNotEmpty(await res.body.access_token)
-            assert.equal(await res.body.expires_in, 3600)
-            assert.isAbove(await res.body.user_id, 0)
-            assert.equal(await res.headers.get('content-type'), "application/json")
+            assert.jsonSchema(res.body, authData._registerUser.registerUserSchema)
+            assert.equal(res.status, authData.status.status201)
+            assert.equal(res.statusText, authData.status.status201Text)
+            assert.equal(res.body.token_type, 'bearer')
+            assert.isNotEmpty(res.body.access_token)
+            assert.equal(res.body.expires_in, 3600)
+            assert.isAbove(res.body.user_id, 0)
+            assert.equal(res.headers.get('content-type'), "application/json")
         })
     })
 
-    //Using data iterator to run same script for multiple inputs
     authData._registerUser.invalidDataList.forEach(async function (reqData, index) {
         it(`Negative-Register a user given: ${index+1} - Invalid ${reqData.testName}`, async function () {
 
@@ -36,9 +35,9 @@ describe('Test User Registration - Endpoint: ' + endpoints.registerUserURL, func
             const res = await authHelper.registerUser(this, reqData)
 
             //Asserting the Response
-            assert.equal(await res.status, authData.status.status422)
-            assert.equal(await res.statusText, authData.status.status422Text)
-            assert.equal(await res.body.message, authData._registerUserText.invalidData)
+            assert.equal(res.status, authData.status.status422)
+            assert.equal(res.statusText, authData.status.status422Text)
+            assert.equal(res.body.message, authData._registerUserText.invalidData)
             assert.deepEqual(res.body.errors, reqData.expectedErr)
         })
     })
@@ -48,13 +47,13 @@ describe('Test User Registration - Endpoint: ' + endpoints.registerUserURL, func
         //Prerequisite registering a user
         var reqData = authData._registerUser.validData
         var res = await authHelper.registerUser(this, reqData)
-        assert.equal(await res.status, authData.status.status201)
+        assert.equal(res.status, authData.status.status201)
 
         //Register user given user already exists
         var res = await authHelper.registerUser(this, reqData)
 
         //Asserting the Response
-        assert.equal(await res.status, authData.status.status422)
-        assert.equal(await res.statusText, authData.status.status422Text)
+        assert.equal(res.status, authData.status.status422)
+        assert.equal(res.statusText, authData.status.status422Text)
     })
 })

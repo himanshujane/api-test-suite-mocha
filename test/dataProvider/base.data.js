@@ -11,10 +11,16 @@ export default class ErrorData {
             status201Text: "Created",
 
             status422: 422,
-            status422Text: "Unprocessable Entity"
+            status422Text: "Unprocessable Entity",
+
+            status401: 401,
+            status401Text: "Unauthorized",
         }
     }
 
+    get expiredToken() {
+        return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE2MDczMjc3MDUsImV4cCI6MTYwNzMyNzc2NSwibmJmIjoxNjA3MzI3NzA1LCJqdGkiOiJyN3JiMURrS2gxZUIzb3NKIiwic3ViIjoxMDAxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.lWGP0RdkmGtjLwMtFhI3_SlKiZWWvUDY8jmakRqIM-w"
+    }
     /**
      * Following functions generates fake testdata
      */
@@ -30,11 +36,23 @@ export default class ErrorData {
         return faker.internet.email()
     }
 
-    get fakeNumber() {
-        return faker.random.number()
-    }
-
     get fakeText() {
         return faker.lorem.words(5)
+    }
+
+    /**
+     * @param {number} len - Length of the requested number 
+     * @returns {number} 
+     */
+    fakeNumber(len) {
+        return faker.random.number(len)
+    }
+
+    /**
+     * @param {number} len - Length of the requested string 
+     * @returns {string} 
+     */
+    fakeAlphaNumeric(len) {
+        return faker.random.alphaNumeric(len)
     }
 }
