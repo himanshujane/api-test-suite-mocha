@@ -282,5 +282,23 @@ class TasksData extends BaseData {
       ]
     }
   }
+
+  get _deleteTask() {
+    return {
+      invalidDataList: [{
+          testName: "Task ID is ==> 0",
+          taskId: 0,
+        },
+        {
+          testName: "Task ID is ==> 100",
+          taskId: 100,
+        },
+        {
+          testName: "Task ID is ==> -1",
+          taskId: -1,
+        }
+      ]
+    }
+  }
 }
 export default new TasksData()

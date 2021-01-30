@@ -32,6 +32,14 @@ class TasksHelper extends HttpUtil {
         return response
     }
 
+    async deleteTask(scope, reqData) {
+        let reqURL = Endpoints.deleteTaskURL(reqData.id)
+        let response = await this.delete(reqURL, reqData.token)
+
+        this.setContext(scope, reqData, response)
+        return response
+    }
+
     /**
      * This function helps to create a new task for given user
      * @returns {object} - Task datails

@@ -21,4 +21,9 @@ export default class Endpoints {
     static get getAllTasksURL() {
         return this.baseURL + "/api/v1/tasks"
     }
+
+    static deleteTaskURL(id) {
+        return this.baseURL + `/api/v1/tasks/${id}`
+    }
+
 }

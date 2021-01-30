@@ -14,12 +14,19 @@ export default class ErrorData {
             status201: 201,
             status201Text: "Created",
 
-            status422: 422,
-            status422Text: "Unprocessable Entity",
+            status204: 204,
+            status204Text: "No Content",
 
             status401: 401,
             status401Text: "Unauthorized",
+
+            status404: 404,
+            status404Text: "Not Found",
+        
+            status422: 422,
+            status422Text: "Unprocessable Entity",
         }
+           
     }
 
     /**

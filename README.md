@@ -23,7 +23,7 @@ npm install
 
 Run the tests
 ```
-npm run
+npm test
 ```
 
 Generated Report can be accessed from below path
