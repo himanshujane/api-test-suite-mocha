@@ -2,6 +2,9 @@ import faker from 'faker'
 
 export default class ErrorData {
 
+    /**
+     * This function returns status code and status text.
+     */
     get status() {
         return {
             status201: 201,
@@ -12,6 +15,9 @@ export default class ErrorData {
         }
     }
 
+    /**
+     * Following functions generates fake testdata
+     */
     get fakeFullName() {
         return faker.name.findName()
     }
@@ -26,5 +32,9 @@ export default class ErrorData {
 
     get fakeNumber() {
         return faker.random.number()
+    }
+
+    get fakeText() {
+        return faker.lorem.words(5)
     }
 }

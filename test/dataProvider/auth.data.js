@@ -1,9 +1,12 @@
 import BaseData from './base.data.js'
 
-class TestData extends BaseData {
+class AuthData extends BaseData {
 
-    //Define test data specific to testsuite
+    //This class defines test data specific to Auth related endpoints
 
+    /**
+     * This function defines all the text messages and key labels specific to register user endpoint
+     */
     get _registerUserText() {
         return {
             name: "name",
@@ -23,20 +26,33 @@ class TestData extends BaseData {
         }
     }
 
+    /**
+     * This function defines the list of testdata to be used for register user endpoint.
+     */
     get _registerUser() {
         return {
             registerUserSchema: {
+                "type": "object",
                 "properties": {
-                    id: {
-                        "type": 'number'
+                    "access_token": {
+                        "type": "string"
                     },
-                    name: {
-                        "type": 'string'
+                    "token_type": {
+                        "type": "string"
                     },
-                    email: {
-                        "type": 'string'
+                    "expires_in": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
                     }
-                }
+                },
+                "required": [
+                    "access_token",
+                    "token_type",
+                    "expires_in",
+                    "user_id"
+                ]
             },
             validData: {
                 reqBody: {
@@ -51,7 +67,7 @@ class TestData extends BaseData {
             },
 
             validDataList: [{
-                    testName: "Basic valid data",
+                    testName: "Standard inputs",
                     reqBody: {
                         [this._registerUserText.name]: this.fakeFirstName,
                         [this._registerUserText.email]: this.fakeEmail,
@@ -89,7 +105,7 @@ class TestData extends BaseData {
             ],
 
             invalidDataList: [{
-                    testName: "Space between name",
+                    testName: "Name - Space between name",
                     reqBody: {
                         [this._registerUserText.name]: this.fakeFullName,
                         [this._registerUserText.email]: this.fakeEmail,
@@ -104,22 +120,22 @@ class TestData extends BaseData {
                     }
                 },
                 {
-                    testName: "Password and password_confirmation different",
+                    testName: "Name - Unsupported special characters",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
+                        [this._registerUserText.name]: "@#$%",
                         [this._registerUserText.email]: this.fakeEmail,
                         [this._registerUserText.password]: "testPassword",
-                        [this._registerUserText.password_confirmation]: "passwordtest"
+                        [this._registerUserText.password_confirmation]: "testPassword"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.password]: [this._registerUserText.invalidPasswordConfirmation]
+                        [this._registerUserText.name]: [this._registerUserText.invalidName]
                     }
                 },
                 {
-                    testName: "Invalid Email Id - No email domain",
+                    testName: "Email Id - No email domain",
                     reqBody: {
                         [this._registerUserText.name]: this.fakeFirstName,
                         [this._registerUserText.email]: "test",
@@ -134,7 +150,7 @@ class TestData extends BaseData {
                     }
                 },
                 {
-                    testName: "Space between email id",
+                    testName: "Email Id - Space between email id",
                     reqBody: {
                         [this._registerUserText.name]: this.fakeFirstName,
                         [this._registerUserText.email]: "test @test.com",
@@ -149,7 +165,7 @@ class TestData extends BaseData {
                     }
                 },
                 {
-                    testName: "Password less than 8 characters",
+                    testName: "Password - Password less than 8 characters",
                     reqBody: {
                         [this._registerUserText.name]: this.fakeFirstName,
                         [this._registerUserText.email]: this.fakeEmail,
@@ -164,7 +180,37 @@ class TestData extends BaseData {
                     }
                 },
                 {
-                    testName: "Giving all invalid inputs",
+                    testName: "Password - Password and password_confirmation input different",
+                    reqBody: {
+                        [this._registerUserText.name]: this.fakeFirstName,
+                        [this._registerUserText.email]: this.fakeEmail,
+                        [this._registerUserText.password]: "testPassword",
+                        [this._registerUserText.password_confirmation]: "passwordtest"
+                    },
+                    reqHeader: {
+                        'Content-Type': 'application/json'
+                    },
+                    expectedErr: {
+                        [this._registerUserText.password]: [this._registerUserText.invalidPasswordConfirmation]
+                    }
+                },
+                {
+                    testName: "Password - Space between password input",
+                    reqBody: {
+                        [this._registerUserText.name]: this.fakeFirstName,
+                        [this._registerUserText.email]: this.fakeEmail,
+                        [this._registerUserText.password]: "1234 567",
+                        [this._registerUserText.password_confirmation]: "1234 567"
+                    },
+                    reqHeader: {
+                        'Content-Type': 'application/json'
+                    },
+                    expectedErr: {
+                        [this._registerUserText.password]: [this._registerUserText.invalidPassword]
+                    }
+                },
+                {
+                    testName: "All inputs",
                     reqBody: {
                         [this._registerUserText.name]: this.fakeFullName,
                         [this._registerUserText.email]: "test",
@@ -181,7 +227,7 @@ class TestData extends BaseData {
                     }
                 },
                 {
-                    testName: "Giving all inputs as Empty",
+                    testName: "All inputs - As Empty",
                     reqBody: {
                         [this._registerUserText.name]: "",
                         [this._registerUserText.email]: "",
@@ -196,24 +242,9 @@ class TestData extends BaseData {
                         [this._registerUserText.email]: [this._registerUserText.emptyEmail],
                         [this._registerUserText.password]: [this._registerUserText.emptyPassword]
                     }
-                },
-                {
-                    testName: "Space between password input",
-                    reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "1234 567",
-                        [this._registerUserText.password_confirmation]: "1234 567"
-                    },
-                    reqHeader: {
-                        'Content-Type': 'application/json'
-                    },
-                    expectedErr: {
-                        [this._registerUserText.password]: [this._registerUserText.invalidPassword]
-                    }
                 }
             ]
         }
     }
 }
-export default new TestData()
+export default new AuthData()

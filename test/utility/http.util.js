@@ -1,4 +1,6 @@
-export default class HttpUtil {
+import BaseUtil from '../utility/base.util.js'
+
+export default class HttpUtil extends BaseUtil {
 
     /**
      * This function makes POST request
@@ -7,8 +9,11 @@ export default class HttpUtil {
      * @returns {object} - this returns the entire response in required format
      */
 
-    post(reqURL, data) {
+    post(reqURL, data, token="") {
 
+        if (token != "") {
+            data.reqHeader ['Authorization']=`Bearer ${token}`
+        }
         const requestOptions = {
             method: 'POST',
             headers: data.reqHeader,
