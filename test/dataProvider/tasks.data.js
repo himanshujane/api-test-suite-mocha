@@ -11,10 +11,8 @@ class TasksData extends BaseData {
     return {
       title: "title",
 
-      invalidData: "The given data was invalid.",
       emptyTitle: "The title field is required.",
       titleCharLimit: "The title may not be greater than 255 characters.",
-      unauthorized: "Unauthenticated."
     }
   }
 
@@ -157,6 +155,129 @@ class TasksData extends BaseData {
           expectedErr: {
             [this._createTasksText.title]: [this._createTasksText.emptyTitle]
           }
+        }
+      ]
+    }
+  }
+
+  get _getAllTasks() {
+    return {
+      getAllTasksSchema: {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": [{
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "due_at": {
+                    "type": "null"
+                  },
+                  "is_completed": {
+                    "type": "boolean"
+                  },
+                  "author": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "email"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "due_at",
+                  "is_completed",
+                  "author"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "due_at": {
+                    "type": "null"
+                  },
+                  "is_completed": {
+                    "type": "boolean"
+                  },
+                  "author": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "email"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "due_at",
+                  "is_completed",
+                  "author"
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      validDataList: [{
+          testName: "Having No Tasks",
+          expectedData: []
+        },
+        {
+          testName: "Having one Task"
+        },
+        {
+          testName: "Having two Task"
+        }
+      ],
+      invalidDataList: [{
+          testName: "Empty token",
+          token: ""
+        },
+        {
+          testName: "Expired token",
+          token: this.expiredToken
         }
       ]
     }

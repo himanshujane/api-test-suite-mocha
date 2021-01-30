@@ -14,7 +14,6 @@ class AuthData extends BaseData {
             password: "password",
             password_confirmation: "password_confirmation",
 
-            invalidData: "The given data was invalid.",
             invalidPasswordConfirmation: "The password confirmation does not match.",
             invalidName: "The name may only contain letters, numbers, dashes and underscores.",
             invalidEmail: "The email must be a valid email address.",

@@ -17,4 +17,8 @@ export default class Endpoints {
     static get createTasksURL() {
         return this.baseURL + "/api/v1/tasks"
     }
+
+    static get getAllTasksURL() {
+        return this.baseURL + "/api/v1/tasks"
+    }
 }

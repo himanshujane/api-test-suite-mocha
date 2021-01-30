@@ -24,6 +24,27 @@ export default class HttpUtil extends BaseUtil {
         return fetch(reqURL, requestOptions).then(this.handleResponse);
     }
 
+    /**
+     * 
+     * @param {string} reqURL - URL to pass in request
+     * @param {string} token - token for authentication
+     * @returns {object} - this returns the entire response in required format
+     */
+    get(reqURL, token="") {
+
+        if (token != "") {
+            var reqHeader = {'Authorization':`Bearer ${token}` }
+        }
+
+        const requestOptions = {
+            method: 'GET',
+            headers: reqHeader,
+            timeout: 20000
+        }
+        console.log("Making GET Request to : ", reqURL)
+        return fetch(reqURL, requestOptions).then(this.handleResponse);
+    }
+
     //HTTP Helper function
 
     /**

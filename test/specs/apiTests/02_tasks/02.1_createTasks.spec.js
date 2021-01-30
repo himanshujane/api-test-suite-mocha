@@ -7,7 +7,6 @@ import tasksData from '../../../dataProvider/tasks.data.js'
 import endpoints from '../../../helper/endpoints.helper.js'
 chai.use(require('chai-json-schema'))
 
-//dp stand for data provider
 
 describe('Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, function () {
     let newUser
@@ -47,7 +46,7 @@ describe('Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, funct
             //Asserting the Response
             assert.equal(res.status, tasksData.status.status422)
             assert.equal(res.statusText, tasksData.status.status422Text)
-            assert.equal(res.body.message, tasksData._createTasksText.invalidData)
+            assert.equal(res.body.message, tasksData.commonMsgs.invalidData)
             assert.deepEqual(res.body.errors, reqData.expectedErr)
         })
     })
@@ -63,6 +62,6 @@ describe('Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, funct
         //Asserting the Response
         assert.equal(res.status, tasksData.status.status401)
         assert.equal(res.statusText, tasksData.status.status401Text)
-        assert.equal(res.body.message, tasksData._createTasksText.unauthorized)
+        assert.equal(res.body.message, tasksData.commonMsgs.unauthorized)
     })
 })

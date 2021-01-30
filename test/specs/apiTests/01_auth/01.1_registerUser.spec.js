@@ -37,7 +37,7 @@ describe('Test User Registration - Endpoint: ' + endpoints.registerUserURL, func
             //Asserting the Response
             assert.equal(res.status, authData.status.status422)
             assert.equal(res.statusText, authData.status.status422Text)
-            assert.equal(res.body.message, authData._registerUserText.invalidData)
+            assert.equal(res.body.message, authData.commonMsgs.invalidData)
             assert.deepEqual(res.body.errors, reqData.expectedErr)
         })
     })
