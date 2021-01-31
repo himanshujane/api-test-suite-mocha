@@ -8,9 +8,9 @@ import snippet from '../IN.00_snippets/SN.01_commonSnippets.js'
 
 
 describe(`@Integration -Given User with its own token when operates on other user's tasks`, function () {
-    var newUser1
-    var newUser2
-    var user1Task
+    var newUser1 = Object
+    var newUser2 = Object
+    var user1Task = Object
 
     before('Setting Prerequisite data', async function () {
         //Registering a new user

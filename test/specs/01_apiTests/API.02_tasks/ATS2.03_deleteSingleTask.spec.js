@@ -9,8 +9,8 @@ chai.use(require('chai-json-schema'))
 
 
 describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskURL("<id>"), function () {
-    var newUser
-    var newTask
+    var newUser = Object
+    var newTask = Object
 
     before('Setting Prerequisite data', async function () {
         newUser = await authHelper.getNewUser()

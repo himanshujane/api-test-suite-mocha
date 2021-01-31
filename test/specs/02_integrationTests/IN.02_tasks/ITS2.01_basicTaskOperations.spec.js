@@ -8,11 +8,11 @@ import snippet from '../IN.00_snippets/SN.01_commonSnippets.js'
 
 
 describe('@Integration -User journery for all the task related operations', function () {
-    var newUser
-    var newTask1
-    var newTask2
-    var reqDataUpdateTask
-    var taskIdAndUserToken
+    var newUser = Object
+    var newTask1 = Object
+    var newTask2 = Object
+    var reqDataUpdateTask = Object
+    var taskIdAndUserToken= Object
 
     before('Setting Prerequisite data', async function () {
         //Registering a new user

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha",
-    "debug": "npx mocha --no-parallel"
+    "serial": "npx mocha --no-parallel",
+    "stress": "npx mocha spec 'test/specs/03_stressTests/*.js' --grep @STRESS --no-parallel"
   },
   "repository": {
     "type": "git",

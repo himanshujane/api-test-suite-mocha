@@ -9,7 +9,7 @@ chai.use(require('chai-json-schema'))
 
 
 describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, function () {
-    var newUser
+    var newUser = Object
 
     before('Setting Prerequisite data', async function () {
         newUser = await authHelper.getNewUser()

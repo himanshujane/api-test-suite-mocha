@@ -5,7 +5,7 @@ module.exports = {
     PORT: process.env.PORT ? process.env.PORT : ':8000',
 
     //Define specs for test execution.[array]
-    spec: "test/specs/**/*.spec.js",
+    spec: ["test/specs/01*/**/*.spec.js","test/specs/02*/**/*.spec.js"],
     
     //Show the difference between expected and actual values when an assertion failure is encountered [boolean]
     diff: true,
