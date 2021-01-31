@@ -65,6 +65,17 @@ class AuthData extends BaseData {
                 }
             },
 
+            updateUserData: {
+                reqBody: {
+                    [this._registerUserText.name]: this.fakeFirstName,
+                    [this._registerUserText.email]: this.fakeEmail,
+                    [this._registerUserText.password]: "newPassword",
+                    [this._registerUserText.password_confirmation]: "newPassword"
+                },
+                reqHeader: {
+                    'Content-Type': 'application/json'
+                }
+            },
             validDataList: [{
                     testName: "Standard inputs",
                     reqBody: {

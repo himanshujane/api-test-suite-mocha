@@ -15,10 +15,10 @@ class CommonSnippets {
         assert.equal((Object.keys(res.body).length), 1)
     }
 
-    assert_ITS201_TaskDetails(res, reqDataUpdateTask) {
+    assert_ITS201_TaskDetails(res, reqDataUpdateTask, id) {
 
         assert.deepEqual(res.status, tasksData.status[200])
-        assert.equal(res.body.data.id, reqDataUpdateTask.id)
+        assert.equal(res.body.data.id, id)
         assert.equal(res.body.data.title, reqDataUpdateTask.reqBody.title)
         assert.equal(res.body.data.is_completed, reqDataUpdateTask.reqBody.is_completed)
     }

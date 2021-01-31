@@ -9,10 +9,10 @@ chai.use(require('chai-json-schema'))
 
 
 describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, function () {
-    var newUser = Object
+    var _newUser = Object
 
     before('Setting Prerequisite data', async function () {
-        newUser = await authHelper.getNewUser()
+        _newUser = await authHelper.getNewUser()
     })
 
     //Using data iterator to run same script for multiple inputs
@@ -20,7 +20,7 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
         it(`Positive-Creating Multiple tasks given same user. Task: ${index+1} - ${reqData.testName}`, async function () {
 
             //Adding token to request Header
-            Object.assign(reqData.reqHeader, newUser.token)
+            Object.assign(reqData.reqHeader, _newUser.token)
 
             //Making API request and saving response in a variable
             const res = await tasksHelper.createTasks(this, reqData)
@@ -28,9 +28,9 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
             //Asserting the Response
             assert.jsonSchema(res.body, tasksData._createTasks.createTasksSchema)
             assert.deepEqual(res.status, tasksData.status[201])
-            assert.equal(res.body.data.author.id, newUser.id)
-            assert.equal(res.body.data.author.name, newUser.name)
-            assert.equal(res.body.data.author.email, newUser.email)
+            assert.equal(res.body.data.author.id, _newUser.id)
+            assert.equal(res.body.data.author.name, _newUser.name)
+            assert.equal(res.body.data.author.email, _newUser.email)
             assert.isAbove(res.body.data.id, 0)
             assert.equal(res.body.data.title, reqData.reqBody.title)
             assert.equal(res.body.data.due_at, null)
@@ -43,7 +43,7 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
         it(`Negative-Creating tasks given invalid title: ${index+1} - ${reqData.testName}`, async function () {
 
             //Adding token to request Header
-            Object.assign(reqData.reqHeader, newUser.token)
+            Object.assign(reqData.reqHeader, _newUser.token)
 
             //Making API request and saving response in a variable
             const res = await tasksHelper.createTasks(this, reqData)

@@ -11,12 +11,11 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains details of newly created task
      */
     async createTasks(scope, reqData) {
+        
         const reqURL = Endpoints.createTasksURL
         const response = await this.post(reqURL, reqData)
-        
-        //Adding context to test report
+
         this.setContext(scope, reqData, response)
-        
         return response
     }
 
@@ -27,51 +26,62 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains list of all the tasks for given user
      */
     async getAllTasks(scope, reqHeader) {
+        
         const reqURL = Endpoints.getAllTasksURL
         const response = await this.get(reqURL, reqHeader)
 
-        //Adding context to test report
         this.setContext(scope, reqHeader, response)
-
         return response
     }
 
     /**
      * This function deletes a given task for given user
      * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} reqData - this contains all the test data to pass in request
+     * @param {object} token - user token
+     * @param {number} taskId - task id
      * @returns {object} - contains request status
      */
-    async deleteTask(scope, reqData) {
-        const reqURL = Endpoints.deleteTaskURL(reqData.id)
-        const response = await this.delete(reqURL, reqData.reqHeader)
+    async deleteTask(scope, token, taskId) {
+        
+        const reqURL = Endpoints.deleteTaskURL(taskId)
+        const response = await this.delete(reqURL, token)
 
-        //Adding context to test report
-        this.setContext(scope, reqData, response)
-
+        this.setContext(scope, token, response)
         return response
     }
 
     /**
      * This function gets a given task for given user
      * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} reqData - this contains all the test data to pass in request
+     * @param {object} token - user token
+     * @param {number} taskId - task id
      * @returns {object} - contains given task details 
      */
-    async getTask(scope, reqData) {
-        const reqURL = Endpoints.getTaskURL(reqData.id)
-        const response = await this.get(reqURL, reqData.reqHeader)
+    async getTask(scope, token, taskId) {
+       
+        const reqURL = Endpoints.getTaskURL(taskId)
+        const response = await this.get(reqURL, token)
 
-        //Adding context to test report
-        this.setContext(scope, reqData, response)
+        this.setContext(scope, token, response)
         return response
     }
 
-    async updateTask(scope, reqData) {
-        const reqURL = Endpoints.updateTaskURL(reqData.id)
+    /**
+     * this function updates the task
+     * @param {object} scope - this is object of calling testcase which is used to set context in report.
+     * @param {object} reqData - contains new task details
+     * @param {object} token - user token
+     * @param {number} taskId - task id
+     * @returns {object} - contains udpated task details 
+     */
+    async updateTask(scope, reqData, token, taskId) {
+
+        //Adding token to request Header
+        Object.assign(reqData.reqHeader, token)
+
+        const reqURL = Endpoints.updateTaskURL(taskId)
         const response = await this.put(reqURL, reqData)
 
-        //Adding context to test report
         this.setContext(scope, reqData, response)
         return response
     }
@@ -85,13 +95,13 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains new task details for given user
      */
     async setNewTask(token) {
-        const reqURL = Endpoints.createTasksURL
+       
         var reqData = tasksData._createTasks.validData
 
         //Adding token to request Header
         Object.assign(reqData.reqHeader, token)
 
-        //Creating a new task
+        const reqURL = Endpoints.createTasksURL
         const response = await this.post(reqURL, reqData)
 
         return response.body.data
