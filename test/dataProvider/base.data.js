@@ -8,23 +8,40 @@ export default class ErrorData {
     get status() {
         return {
 
-            status200: 200,
-            status200Text: "OK",
+            200: {
+                status: 200,
+                statusText: "OK"
+            },
 
-            status201: 201,
-            status201Text: "Created",
+            201: {
+                status: 201,
+                statusText: "Created"
+            },
 
-            status204: 204,
-            status204Text: "No Content",
+            204: {
+                status: 204,
+                statusText: "No Content"
+            },
 
-            status401: 401,
-            status401Text: "Unauthorized",
+            401: {
+                status: 401,
+                statusText: "Unauthorized"
+            },
 
-            status404: 404,
-            status404Text: "Not Found",
+            403: {
+                status: 403,
+                statusText: "Forbidden"
+            },
 
-            status422: 422,
-            status422Text: "Unprocessable Entity",
+            404: {
+                status: 404,
+                statusText: "Not Found"
+            },
+
+            422: {
+                status: 422,
+                statusText: "Unprocessable Entity"
+            }
         }
 
     }
@@ -35,7 +52,8 @@ export default class ErrorData {
     get commonMsgs() {
         return {
             invalidData: "The given data was invalid.",
-            unauthorized: "Unauthenticated."
+            unauthorized: "Unauthenticated.",
+            actionUnauthorized: "This action is unauthorized."
         }
     }
 

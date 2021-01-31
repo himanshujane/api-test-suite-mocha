@@ -1,17 +1,18 @@
-import chai, {
+import {
     assert
 } from 'chai'
 import authHelper from '../../../helper/auth.helper.js'
 import tasksHelper from '../../../helper/tasks.helper.js'
 import tasksData from '../../../dataProvider/tasks.data.js'
-chai.use(require('chai-json-schema'))
+import snippet from '../IN.00_snippets/SN.01_commonSnippets.js'
 
 
-describe('@Integration -User journery for all the task realted operations', function () {
+describe('@Integration -User journery for all the task related operations', function () {
     var newUser
     var newTask1
     var newTask2
     var reqDataUpdateTask
+    var taskIdAndUserToken
 
     before('Setting Prerequisite data', async function () {
         //Registering a new user
@@ -39,30 +40,28 @@ describe('@Integration -User journery for all the task realted operations', func
     it(`Getting all the task`, async function () {
 
         //Getting All Tasks
-        const allTasks = await tasksHelper.getAllTasks(this, newUser.token)
+        const res = await tasksHelper.getAllTasks(this, newUser.token)
 
         //Asserting the Response
-        assert.equal(allTasks.status, tasksData.status.status200)
-        assert.equal(allTasks.statusText, tasksData.status.status200Text)
-        assert.deepEqual(allTasks.body.data[0], newTask1)
-        assert.deepEqual(allTasks.body.data[1], newTask2)
+        assert.deepEqual(res.status, tasksData.status[200])
+        assert.deepEqual(res.body.data[0], newTask1)
+        assert.deepEqual(res.body.data[1], newTask2)
     })
 
     it(`Getting given specific task`, async function () {
 
         //Setting testdata
-        const reqData = {
+        taskIdAndUserToken = {
             id: newTask1.id,
             reqHeader: newUser.token
         }
 
         //Getting only first task
-        const firstTask = await tasksHelper.getTask(this, reqData)
+        const res = await tasksHelper.getTask(this, taskIdAndUserToken)
 
         //Asserting the Response
-        assert.equal(firstTask.status, tasksData.status.status200)
-        assert.equal(firstTask.statusText, tasksData.status.status200Text)
-        assert.deepEqual(firstTask.body.data, newTask1)
+        assert.deepEqual(res.status, tasksData.status[200])
+        assert.deepEqual(res.body.data, newTask1)
     })
 
     it(`Updating given specific task`, async function () {
@@ -79,32 +78,37 @@ describe('@Integration -User journery for all the task realted operations', func
         })
 
         //Making request to update the task1
-        const updatedFirstTask = await tasksHelper.updateTask(this, reqDataUpdateTask)
+        const res = await tasksHelper.updateTask(this, reqDataUpdateTask)
 
         //Asserting the Response
-        assert.equal(updatedFirstTask.status, tasksData.status.status200)
-        assert.equal(updatedFirstTask.statusText, tasksData.status.status200Text)
-        assert.equal(updatedFirstTask.body.data.id, reqDataUpdateTask.id)
-        assert.equal(updatedFirstTask.body.data.title, reqDataUpdateTask.reqBody.title)
-        assert.equal(updatedFirstTask.body.data.is_completed, reqDataUpdateTask.reqBody.is_completed)
+        snippet.assert_ITS201_TaskDetails(res, reqDataUpdateTask)
     })
 
     it(`Getting given updated task`, async function () {
 
-        //Setting testdata
-        const reqData = {
-            id: newTask1.id,
-            reqHeader: newUser.token
-        }
-
         //Getting updated first Task
-        const updatedFirstTask = await tasksHelper.getTask(this, reqData)
+        const res = await tasksHelper.getTask(this, taskIdAndUserToken)
 
         //Asserting the Response
-        assert.equal(updatedFirstTask.status, tasksData.status.status200)
-        assert.equal(updatedFirstTask.statusText, tasksData.status.status200Text)
-        assert.equal(updatedFirstTask.body.data.id, reqDataUpdateTask.id)
-        assert.equal(updatedFirstTask.body.data.title, reqDataUpdateTask.reqBody.title)
-        assert.equal(updatedFirstTask.body.data.is_completed, reqDataUpdateTask.reqBody.is_completed)
+        snippet.assert_ITS201_TaskDetails(res, reqDataUpdateTask)
     })
+
+    it(`Deleting given Task`, async function () {
+
+        //Making API request and saving response in a variable
+        const res = await tasksHelper.deleteTask(this, taskIdAndUserToken)
+
+        //Asserting the Response
+        assert.deepEqual(res.status, tasksData.status[204])
+    })
+
+    it(`Getting the deleted task`, async function () {
+
+        //Getting only first task
+        const res = await tasksHelper.getTask(this, taskIdAndUserToken)
+
+        //Asserting the Response
+        assert.deepEqual(res.status, tasksData.status[404])
+    })
+
 })

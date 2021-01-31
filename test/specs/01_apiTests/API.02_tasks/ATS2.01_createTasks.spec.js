@@ -27,8 +27,7 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
 
             //Asserting the Response
             assert.jsonSchema(res.body, tasksData._createTasks.createTasksSchema)
-            assert.equal(res.status, tasksData.status.status201)
-            assert.equal(res.statusText, tasksData.status.status201Text)
+            assert.deepEqual(res.status, tasksData.status[201])
             assert.equal(res.body.data.author.id, newUser.id)
             assert.equal(res.body.data.author.name, newUser.name)
             assert.equal(res.body.data.author.email, newUser.email)
@@ -50,8 +49,7 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
             const res = await tasksHelper.createTasks(this, reqData)
 
             //Asserting the Response
-            assert.equal(res.status, tasksData.status.status422)
-            assert.equal(res.statusText, tasksData.status.status422Text)
+            assert.deepEqual(res.status, tasksData.status[422])
             assert.equal(res.body.message, tasksData.commonMsgs.invalidData)
             assert.deepEqual(res.body.errors, reqData.expectedErr)
         })
@@ -60,7 +58,7 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
     it(`Negative-Creating tasks given Expired Token`, async function () {
 
         //Getting Data
-        var reqData = tasksData._createTasks.validData
+        const reqData = tasksData._createTasks.validData
 
         //Adding token to request Header
         Object.assign(reqData.reqHeader, tasksData.expiredToken)
@@ -69,8 +67,7 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
         const res = await tasksHelper.createTasks(this, reqData, tasksData.expiredToken)
 
         //Asserting the Response
-        assert.equal(res.status, tasksData.status.status401)
-        assert.equal(res.statusText, tasksData.status.status401Text)
+        assert.deepEqual(res.status, tasksData.status[401])
         assert.equal(res.body.message, tasksData.commonMsgs.unauthorized)
     })
 })

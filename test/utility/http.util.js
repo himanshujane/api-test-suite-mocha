@@ -22,7 +22,7 @@ export default class HttpUtil extends BaseUtil {
     }
 
     /**
-    * This function makes HTTP PUT request
+     * This function makes HTTP PUT request
      * @param {string} reqURL - URL to pass in request
      * @param {object} reqData  - this contains all the test data to pass in request
      * @returns {object} - this returns the entire response in required format
@@ -62,7 +62,7 @@ export default class HttpUtil extends BaseUtil {
      * @param {string} token - token for authentication
      * @returns {object} - this returns the entire response in required format
      */
-    delete(reqURL, reqHeader="") {
+    delete(reqURL, reqHeader = "") {
 
         const requestOptions = {
             method: 'DELETE',
@@ -83,8 +83,10 @@ export default class HttpUtil extends BaseUtil {
     async handleResponse(response) {
         let body = await response.json().catch(err => console.log("No body in response"))
         return {
-            status: response.status,
-            statusText: response.statusText,
+            status: {
+                status: response.status,
+                statusText: response.statusText
+            },
             body: body,
             headers: response.headers
         }

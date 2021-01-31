@@ -24,8 +24,7 @@ describe('@API Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, 
             const res = await tasksHelper.getAllTasks(this, newUser.token)
 
             //Asserting the Response
-            assert.equal(res.status, tasksData.status.status200)
-            assert.equal(res.statusText, tasksData.status.status200Text)
+            assert.deepEqual(res.status, tasksData.status[200])
 
             //Asserting when there is no task
             if (index == 0) {
@@ -56,8 +55,7 @@ describe('@API Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, 
             const res = await tasksHelper.getAllTasks(this, reqHeader)
 
             //Asserting the Response
-            assert.equal(res.status, tasksData.status.status401)
-            assert.equal(res.statusText, tasksData.status.status401Text)
+            assert.deepEqual(res.status, tasksData.status[401])
             assert.equal(res.body.message, tasksData.commonMsgs.unauthorized)
         })
     })

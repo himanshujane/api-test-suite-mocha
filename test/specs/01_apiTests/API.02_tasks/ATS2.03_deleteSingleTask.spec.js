@@ -19,23 +19,22 @@ describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskUR
 
     it(`Positive-Deleting given Task`, async function () {
 
-        let reqData = {
+        const reqData = {
             id: newTask.id,
             reqHeader: newUser.token
         }
         //Making API request and saving response in a variable
-        var res = await tasksHelper.deleteTask(this, reqData)
+        const res = await tasksHelper.deleteTask(this, reqData)
 
         //Asserting the Response
-        assert.equal(res.status, tasksData.status.status204)
-        assert.equal(res.statusText, tasksData.status.status204Text)
+        assert.deepEqual(res.status, tasksData.status[204])
     })
 
     tasksData._deleteTask.invalidDataList.forEach(async function (test, index) {
         it(`Negative-Deleting given invalid task: ${index+1} - ${test.testName}`, async function () {
 
             //Creating Testdata Object
-            let reqData = {
+            const reqData = {
                 id: test.taskId,
                 reqHeader: newUser.token
             }
@@ -44,8 +43,7 @@ describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskUR
             const res = await tasksHelper.deleteTask(this, reqData)
 
             //Asserting the Response
-            assert.equal(res.status, tasksData.status.status404)
-            assert.equal(res.statusText, tasksData.status.status404Text)
+            assert.deepEqual(res.status, tasksData.status[404])
             assert.equal(res.body.message, tasksData.commonMsgs.invalidData)
         })
     })
