@@ -11,8 +11,8 @@ class AuthHelper extends HttpUtil {
      * @returns {object} - this returns the entire response in required format
      */
     async registerUser(scope, reqData) {
-        let reqURL = Endpoints.registerUserURL
-        let response = await this.post(reqURL, reqData)
+        const reqURL = Endpoints.registerUserURL
+        const response = await this.post(reqURL, reqData)
 
         this.setContext(scope, reqData, response)
         return response
@@ -23,15 +23,17 @@ class AuthHelper extends HttpUtil {
      * @returns {object} - New user datails
      */
     async getNewUser() {
-        let reqURL = Endpoints.registerUserURL
-        let reqData = authData._registerUser.validData
-        let response = await this.post(reqURL, reqData)
+        const reqURL = Endpoints.registerUserURL
+        const reqData = authData._registerUser.validData
+
+        //Registering a new user
+        const response = await this.post(reqURL, reqData)
 
         return {
             id: response.body.user_id,
             name: reqData.reqBody.name,
             email: reqData.reqBody.email,
-            token: response.body.access_token
+            token: JSON.parse(`{"Authorization" : "Bearer ${response.body.access_token}"}`)
         }
     }
 }

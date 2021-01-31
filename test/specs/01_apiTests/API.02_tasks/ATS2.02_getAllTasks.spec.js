@@ -8,7 +8,7 @@ import endpoints from '../../../helper/endpoints.helper.js'
 chai.use(require('chai-json-schema'))
 
 
-describe('Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, function () {
+describe('@API Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, function () {
     var newUser
     var newTask1
     var newTask2
@@ -37,7 +37,7 @@ describe('Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, funct
             else if (index == 1) {
                 assert.deepEqual(res.body.data[0], newTask1)
                 newTask2 = await tasksHelper.setNewTask(newUser.token)
-            } 
+            }
 
             //Asserting when there are two tasks
             else {
@@ -49,11 +49,11 @@ describe('Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, funct
         })
     })
 
-    tasksData._getAllTasks.invalidDataList.forEach(async function (token, index) {
-        it(`Negative-Getting all tasks given invalid Token: ${index+1} - ${token.testName}`, async function () {
+    tasksData._getAllTasks.invalidDataList.forEach(async function (reqHeader, index) {
+        it(`Negative-Getting all tasks given invalid Token: ${index+1} - ${reqHeader.testName}`, async function () {
 
             //Making API request and saving response in a variable
-            const res = await tasksHelper.getAllTasks(this, token)
+            const res = await tasksHelper.getAllTasks(this, reqHeader)
 
             //Asserting the Response
             assert.equal(res.status, tasksData.status.status401)

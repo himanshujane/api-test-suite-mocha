@@ -3,7 +3,7 @@ import config from '../../.mocharc.js'
 export default class Endpoints {
 
     /**
-     * This class lists all the endpoints
+     * This class lists all the application endpoints
      */
 
     static get baseURL() {
@@ -20,6 +20,14 @@ export default class Endpoints {
 
     static get getAllTasksURL() {
         return this.baseURL + "/api/v1/tasks"
+    }
+
+    static getTaskURL(id) {
+        return this.baseURL + `/api/v1/tasks/${id}`
+    }
+
+    static updateTaskURL(id) {
+        return this.baseURL + `/api/v1/tasks/${id}`
     }
 
     static deleteTaskURL(id) {

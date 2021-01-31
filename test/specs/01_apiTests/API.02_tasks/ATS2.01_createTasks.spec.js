@@ -8,8 +8,8 @@ import endpoints from '../../../helper/endpoints.helper.js'
 chai.use(require('chai-json-schema'))
 
 
-describe('Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, function () {
-    let newUser
+describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, function () {
+    var newUser
 
     before('Setting Prerequisite data', async function () {
         newUser = await authHelper.getNewUser()
@@ -19,8 +19,11 @@ describe('Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, funct
     tasksData._createTasks.validDataList.forEach(async function (reqData, index) {
         it(`Positive-Creating Multiple tasks given same user. Task: ${index+1} - ${reqData.testName}`, async function () {
 
+            //Adding token to request Header
+            Object.assign(reqData.reqHeader, newUser.token)
+
             //Making API request and saving response in a variable
-            const res = await tasksHelper.createTasks(this, reqData, newUser.token)
+            const res = await tasksHelper.createTasks(this, reqData)
 
             //Asserting the Response
             assert.jsonSchema(res.body, tasksData._createTasks.createTasksSchema)
@@ -40,8 +43,11 @@ describe('Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, funct
     tasksData._createTasks.invalidDataList.forEach(async function (reqData, index) {
         it(`Negative-Creating tasks given invalid title: ${index+1} - ${reqData.testName}`, async function () {
 
+            //Adding token to request Header
+            Object.assign(reqData.reqHeader, newUser.token)
+
             //Making API request and saving response in a variable
-            const res = await tasksHelper.createTasks(this, reqData, newUser.token)
+            const res = await tasksHelper.createTasks(this, reqData)
 
             //Asserting the Response
             assert.equal(res.status, tasksData.status.status422)
@@ -53,8 +59,11 @@ describe('Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, funct
 
     it(`Negative-Creating tasks given Expired Token`, async function () {
 
-        //Data Setup
+        //Getting Data
         var reqData = tasksData._createTasks.validData
+
+        //Adding token to request Header
+        Object.assign(reqData.reqHeader, tasksData.expiredToken)
 
         //Making API request with expired token and saving response in a variable
         const res = await tasksHelper.createTasks(this, reqData, tasksData.expiredToken)

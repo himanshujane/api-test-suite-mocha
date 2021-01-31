@@ -10,6 +10,7 @@ class TasksData extends BaseData {
   get _createTasksText() {
     return {
       title: "title",
+      isCompleted: "is_completed",
 
       emptyTitle: "The title field is required.",
       titleCharLimit: "The title may not be greater than 255 characters.",
@@ -17,7 +18,7 @@ class TasksData extends BaseData {
   }
 
   /**
-   * This function defines the list of testdata to be used for creating tasks endpoint.
+   * This function defines the list of testdata to be used for creating tasks.
    */
   get _createTasks() {
     return {
@@ -160,6 +161,9 @@ class TasksData extends BaseData {
     }
   }
 
+  /**
+   * This function defines the list of testdata to be used for getting all tasks.
+   */
   get _getAllTasks() {
     return {
       getAllTasksSchema: {
@@ -283,6 +287,9 @@ class TasksData extends BaseData {
     }
   }
 
+  /**
+   * This function defines the list of testdata to be used for deleting tasks.
+   */
   get _deleteTask() {
     return {
       invalidDataList: [{
@@ -298,6 +305,23 @@ class TasksData extends BaseData {
           taskId: -1,
         }
       ]
+    }
+  }
+
+  /**
+   * This function defines the list of testdata to be used for updating tasks.
+   */
+  get _updateTask() {
+    return {
+      validData: {
+        reqBody: {
+          [this._createTasksText.title]: "Test Title 123",
+          [this._createTasksText.isCompleted]: true
+        },
+        reqHeader: {
+          'Content-Type': 'application/json'
+        },
+      }
     }
   }
 }

@@ -7,7 +7,7 @@ import endpoints from '../../../helper/endpoints.helper.js'
 chai.use(require('chai-json-schema'))
 
 
-describe('Test User Registration - Endpoint: ' + endpoints.registerUserURL, function () {
+describe('@API Test User Registration - Endpoint: ' + endpoints.registerUserURL, function () {
 
     //Using data iterator to run same script for multiple inputs
     authData._registerUser.validDataList.forEach(async function (reqData, index) {

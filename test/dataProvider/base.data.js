@@ -22,11 +22,11 @@ export default class ErrorData {
 
             status404: 404,
             status404Text: "Not Found",
-        
+
             status422: 422,
             status422Text: "Unprocessable Entity",
         }
-           
+
     }
 
     /**
@@ -38,9 +38,17 @@ export default class ErrorData {
             unauthorized: "Unauthenticated."
         }
     }
+
+    /**
+     * This function retruns Expired Token
+     */
     get expiredToken() {
-        return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE2MDczMjc3MDUsImV4cCI6MTYwNzMyNzc2NSwibmJmIjoxNjA3MzI3NzA1LCJqdGkiOiJyN3JiMURrS2gxZUIzb3NKIiwic3ViIjoxMDAxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.lWGP0RdkmGtjLwMtFhI3_SlKiZWWvUDY8jmakRqIM-w"
+        return {
+            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE2MDczMjc3MDUsImV4cCI6MTYwNzMyNzc2NSwibmJmIjoxNjA3MzI3NzA1LCJqdGkiOiJyN3JiMURrS2gxZUIzb3NKIiwic3ViIjoxMDAxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.lWGP0RdkmGtjLwMtFhI3_SlKiZWWvUDY8jmakRqIM-w"
+        }
     }
+
+
     /**
      * Following functions generates fake testdata
      */

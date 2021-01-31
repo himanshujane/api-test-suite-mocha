@@ -5,22 +5,37 @@ export default class HttpUtil extends BaseUtil {
     /**
      * This function makes HTTP POST request
      * @param {string} reqURL - URL to pass in request
-     * @param {object} data  - this contains all the test data to pass in request
+     * @param {object} reqData  - this contains all the test data to pass in request
      * @returns {object} - this returns the entire response in required format
      */
 
-    post(reqURL, data, token = "") {
+    post(reqURL, reqData) {
 
-        if (token != "") {
-            data.reqHeader['Authorization'] = `Bearer ${token}`
-        }
         const requestOptions = {
             method: 'POST',
-            headers: data.reqHeader,
-            body: JSON.stringify(data.reqBody),
+            headers: reqData.reqHeader,
+            body: JSON.stringify(reqData.reqBody),
             timeout: 20000
         }
         console.log("Making POST Request to : ", reqURL)
+        return fetch(reqURL, requestOptions).then(this.handleResponse)
+    }
+
+    /**
+    * This function makes HTTP PUT request
+     * @param {string} reqURL - URL to pass in request
+     * @param {object} reqData  - this contains all the test data to pass in request
+     * @returns {object} - this returns the entire response in required format
+     */
+    put(reqURL, reqData) {
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: reqData.reqHeader,
+            body: JSON.stringify(reqData.reqBody),
+            timeout: 20000
+        }
+        console.log("Making PUT Request to : ", reqURL)
         return fetch(reqURL, requestOptions).then(this.handleResponse)
     }
 
@@ -30,13 +45,7 @@ export default class HttpUtil extends BaseUtil {
      * @param {string} token - token for authentication
      * @returns {object} - this returns the entire response in required format
      */
-    get(reqURL, token = "") {
-
-        if (token != "") {
-            var reqHeader = {
-                'Authorization': `Bearer ${token}`
-            }
-        }
+    get(reqURL, reqHeader = "") {
 
         const requestOptions = {
             method: 'GET',
@@ -53,13 +62,7 @@ export default class HttpUtil extends BaseUtil {
      * @param {string} token - token for authentication
      * @returns {object} - this returns the entire response in required format
      */
-    delete(reqURL, token = "") {
-
-        if (token != "") {
-            var reqHeader = {
-                'Authorization': `Bearer ${token}`
-            }
-        }
+    delete(reqURL, reqHeader="") {
 
         const requestOptions = {
             method: 'DELETE',

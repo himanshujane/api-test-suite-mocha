@@ -8,7 +8,7 @@ import endpoints from '../../../helper/endpoints.helper.js'
 chai.use(require('chai-json-schema'))
 
 
-describe('Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskURL("<id>"), function () {
+describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskURL("<id>"), function () {
     var newUser
     var newTask
 
@@ -21,7 +21,7 @@ describe('Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskURL("<i
 
         let reqData = {
             id: newTask.id,
-            token: newUser.token
+            reqHeader: newUser.token
         }
         //Making API request and saving response in a variable
         var res = await tasksHelper.deleteTask(this, reqData)
@@ -37,7 +37,7 @@ describe('Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskURL("<i
             //Creating Testdata Object
             let reqData = {
                 id: test.taskId,
-                token: newUser.token
+                reqHeader: newUser.token
             }
 
             //Making API request and saving response in a variable
