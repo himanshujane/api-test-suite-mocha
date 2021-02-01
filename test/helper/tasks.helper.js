@@ -11,11 +11,11 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains details of newly created task
      */
     async createTasks(scope, reqData) {
-        
+
         const reqURL = Endpoints.createTasksURL
         const response = await this.post(reqURL, reqData)
 
-        this.setContext(scope, reqData, response)
+        this.setContext(scope, reqURL, reqData, response)
         return response
     }
 
@@ -26,11 +26,11 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains list of all the tasks for given user
      */
     async getAllTasks(scope, reqHeader) {
-        
+
         const reqURL = Endpoints.getAllTasksURL
         const response = await this.get(reqURL, reqHeader)
 
-        this.setContext(scope, reqHeader, response)
+        this.setContext(scope, reqURL, reqHeader, response)
         return response
     }
 
@@ -42,11 +42,11 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains request status
      */
     async deleteTask(scope, token, taskId) {
-        
+
         const reqURL = Endpoints.deleteTaskURL(taskId)
         const response = await this.delete(reqURL, token)
 
-        this.setContext(scope, token, response)
+        this.setContext(scope, reqURL, token, response)
         return response
     }
 
@@ -58,11 +58,11 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains given task details 
      */
     async getTask(scope, token, taskId) {
-       
+
         const reqURL = Endpoints.getTaskURL(taskId)
         const response = await this.get(reqURL, token)
 
-        this.setContext(scope, token, response)
+        this.setContext(scope, reqURL, token, response)
         return response
     }
 
@@ -82,7 +82,7 @@ class TasksHelper extends HttpUtil {
         const reqURL = Endpoints.updateTaskURL(taskId)
         const response = await this.put(reqURL, reqData)
 
-        this.setContext(scope, reqData, response)
+        this.setContext(scope, reqURL, reqData, response)
         return response
     }
 
@@ -95,7 +95,7 @@ class TasksHelper extends HttpUtil {
      * @returns {object} - contains new task details for given user
      */
     async setNewTask(token) {
-       
+
         var reqData = tasksData._createTasks.validData
 
         //Adding token to request Header

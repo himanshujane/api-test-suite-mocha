@@ -15,7 +15,7 @@ class AuthHelper extends HttpUtil {
         const reqURL = Endpoints.registerUserURL
         const response = await this.post(reqURL, reqData)
 
-        this.setContext(scope, reqData, response)
+        this.setContext(scope, reqURL, reqData, response)
         return response
     }
 
@@ -41,7 +41,7 @@ class AuthHelper extends HttpUtil {
         const reqURL = Endpoints.loginUserURL
         const response = await this.post(reqURL, reqData)
 
-        this.setContext(scope, reqData, response)
+        this.setContext(scope, reqURL, reqData, response)
         return response
     }
 
@@ -52,11 +52,11 @@ class AuthHelper extends HttpUtil {
      * @returns {object} - contains user details
      */
     async getUser(scope, reqHeader) {
-       
+
         const reqURL = Endpoints.getUserURL
         const response = await this.get(reqURL, reqHeader)
 
-        this.setContext(scope, reqHeader, response)
+        this.setContext(scope, reqURL, reqHeader, response)
         return response
     }
 
@@ -67,7 +67,7 @@ class AuthHelper extends HttpUtil {
      * @returns {object} - contains new token and user id
      */
     async refreshToken(scope, token) {
-        
+
         //Setting testdata for request
         const reqData = {
             reqBody: {},
@@ -80,7 +80,7 @@ class AuthHelper extends HttpUtil {
         const reqURL = Endpoints.refreshTokenURL
         const response = await this.post(reqURL, reqData)
 
-        this.setContext(scope, token, response)
+        this.setContext(scope, reqURL, token, response)
         return response
     }
 
@@ -100,11 +100,27 @@ class AuthHelper extends HttpUtil {
 
         //Adding token to request header
         Object.assign(reqData.reqHeader, userDetails.jsonToken)
-        
+
         const reqURL = Endpoints.updateUserURL(userDetails.id)
         const response = await this.put(reqURL, reqData)
 
-        this.setContext(scope, reqData, response)
+        this.setContext(scope, reqURL, reqData, response)
+        return response
+    }
+
+    /**
+     * This function deletes a given user
+     * @param {object} scope - this is object of calling testcase which is used to set context in report.
+     * @param {object} token - user token
+     * @param {number} userId - user id
+     * @returns {object} - contains Ok msg if user is successfully deleted 
+     */
+    async deleteUser(scope, token, userId) {
+
+        const reqURL = Endpoints.deleteUserURL(userId) 
+        const response = await this.delete(reqURL, token, "text")
+
+        this.setContext(scope, reqURL, token, response)
         return response
     }
 
@@ -123,7 +139,7 @@ class AuthHelper extends HttpUtil {
         const response = await this.post(reqURL, reqData)
 
         if (scope != null) {
-            this.setContext(scope, reqData, response)
+            this.setContext(scope, reqURL, reqData, response)
         }
         return {
             id: response.body.user_id,

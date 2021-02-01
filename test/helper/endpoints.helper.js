@@ -32,6 +32,10 @@ export default class Endpoints {
         return this.baseURL + `/api/v1/users/${id}`
     }
 
+    static deleteUserURL(id) {
+        return this.baseURL + `/api/v1/users/${id}`
+    }
+
     //end
 
     //Start of Tasks Endpoint

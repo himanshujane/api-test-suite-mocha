@@ -18,9 +18,19 @@ export default class ErrorData {
                 statusText: "Created"
             },
 
+            202: {
+                status: 202,
+                statusText: "Accepted"
+            },
+
             204: {
                 status: 204,
                 statusText: "No Content"
+            },
+
+            400: {
+                status: 400,
+                statusText: "Bad Request"
             },
 
             401: {
@@ -38,12 +48,16 @@ export default class ErrorData {
                 statusText: "Not Found"
             },
 
+            418: {
+                status: 418,
+                statusText: "I'm a teapot"
+            },
+
             422: {
                 status: 422,
                 statusText: "Unprocessable Entity"
             }
         }
-
     }
 
     /**
@@ -53,7 +67,9 @@ export default class ErrorData {
         return {
             invalidData: "The given data was invalid.",
             unauthorized: "Unauthenticated.",
-            actionUnauthorized: "This action is unauthorized."
+            actionUnauthorized: "This action is unauthorized.",
+            notInSystem: "Not In our system",
+            tokenBlacklisted: "The token has been blacklisted"
         }
     }
 

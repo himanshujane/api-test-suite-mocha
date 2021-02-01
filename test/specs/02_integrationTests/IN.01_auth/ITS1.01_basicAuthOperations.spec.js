@@ -10,6 +10,7 @@ describe('@Integration -User journery for Auth operations', function () {
     var _reqData = Object
     var _reqData2 = Object
     var _userDetails = Object
+    var _userCredential = Object
 
     it(`Registering a user`, async function () {
 
@@ -109,18 +110,50 @@ describe('@Integration -User journery for Auth operations', function () {
     it(`Logging User with new email id and password`, async function () {
 
         //Setting testdata for request
-        const userCredential = {
+        _userCredential = {
             "email": _reqData2.reqBody.email,
             "password": _reqData2.reqBody.password
         }
 
         //Making request to login user
-        const res = await authHelper.loginUser(this, userCredential)
+        const res = await authHelper.loginUser(this, _userCredential)
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[201])
         assert.equal(res.body.user_id, _userDetails.id)
         assert.isNotEmpty(res.body.access_token)
         assert.equal(res.body.expires_in, 3600)
+    })
+
+
+    it(`Deleting user`, async function () {
+
+        //Making request to delete user
+        const res = await authHelper.deleteUser(this, _userDetails.jsonToken, _userDetails.id)
+
+        //Asserting the Response
+        assert.deepEqual(res.status, authData.status[202])
+        // assert.equal(res.body, "OK")
+    })
+
+
+    it(`Getting user details to check user is successfully deleted`, async function () {
+
+        //Making request to get user details
+        const res = await authHelper.getUser(this, _userDetails.jsonToken)
+
+        //Asserting the Response
+        assert.deepEqual(res.status, authData.status[401])
+        assert.equal(res.body.message, authData.commonMsgs.unauthorized)
+    })
+
+    it(`Should not able to login given deleted user `, async function () {
+
+        //Making request to login user
+        const res = await authHelper.loginUser(this, _userCredential)
+
+        //Asserting the Response
+        assert.deepEqual(res.status, authData.status[418])
+        assert.equal(res.body.errors.email, authData.commonMsgs.notInSystem)
     })
 })

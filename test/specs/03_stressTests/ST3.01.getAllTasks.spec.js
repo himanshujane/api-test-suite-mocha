@@ -12,8 +12,8 @@ describe('@STRESS Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksUR
     var highest = 0
     var startTime = Number
     var endTime = Number
-    var newUser
-    var newTask1
+    var newUser = Object
+    var newTask1 = Object
     let i = 1
 
     before('Setting Prerequisite data', async function () {

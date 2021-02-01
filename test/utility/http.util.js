@@ -59,10 +59,11 @@ export default class HttpUtil extends BaseUtil {
     /**
      * This function makes HTTP DELETE request
      * @param {string} reqURL - URL to pass in request
-     * @param {string} token - token for authentication
+     * @param {object} reqHeader - contains token for authentication
+     * @param {string} resType - request type by default its json
      * @returns {object} - this returns the entire response in required format
      */
-    delete(reqURL, reqHeader = "") {
+    delete(reqURL, reqHeader = "", resType = "json") {
 
         const requestOptions = {
             method: 'DELETE',
@@ -70,7 +71,7 @@ export default class HttpUtil extends BaseUtil {
             timeout: 20000
         }
         console.log("Making DELETE Request to : ", reqURL)
-        return fetch(reqURL, requestOptions).then(this.handleResponse)
+        return fetch(reqURL, requestOptions).then(this.handleResponse, resType)
     }
 
     //HTTP Helper function
@@ -78,10 +79,15 @@ export default class HttpUtil extends BaseUtil {
     /**
      * This function handles all the responses from Http request
      * @param {object} response - raw response received from Http request
+     * @param {string} resType - response type - by default its json
      * @returns {object} - this returns the entire response in required format
      */
-    async handleResponse(response) {
-        let body = await response.json().catch(err => console.log("No body in response"))
+    async handleResponse(response, resType = "json") {
+
+        if (resType == "json") {
+            var body = await response.json().catch(err => console.log("*WARNING: No JSON response in body*"))
+        } else var body = await response.text().catch(err => console.log("*WARNING: No response in body*"))
+
         return {
             status: {
                 status: response.status,
