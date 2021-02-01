@@ -17,8 +17,8 @@ describe('@API Test User Registration - Endpoint: ' + endpoints.registerUserURL,
             const res = await authHelper.registerUser(this, reqData)
 
             //Asserting the Response
-            assert.jsonSchema(res.body, authData._registerUser.registerUserSchema)
             assert.deepEqual(res.status, authData.status[201])
+            assert.jsonSchema(res.body, authData._registerUser.registerUserSchema)
             assert.equal(res.body.token_type, 'bearer')
             assert.isNotEmpty(res.body.access_token)
             assert.equal(res.body.expires_in, 3600)
@@ -35,7 +35,7 @@ describe('@API Test User Registration - Endpoint: ' + endpoints.registerUserURL,
 
             //Asserting the Response
             assert.deepEqual(res.status, authData.status[422])
-            assert.equal(res.body.message, authData.commonMsgs.invalidData)
+            assert.equal(res.body.message, authData.commonValues.invalidData)
             assert.deepEqual(res.body.errors, reqData.expectedErr)
         })
     })

@@ -56,7 +56,7 @@ describe('@API Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, 
 
             //Asserting the Response
             assert.deepEqual(res.status, tasksData.status[401])
-            assert.equal(res.body.message, tasksData.commonMsgs.unauthorized)
+            assert.equal(res.body.message, tasksData.commonValues.unauthorized)
         })
     })
 })

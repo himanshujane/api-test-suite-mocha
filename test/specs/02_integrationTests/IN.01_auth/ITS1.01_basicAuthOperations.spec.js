@@ -144,7 +144,7 @@ describe('@Integration -User journery for Auth operations', function () {
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[401])
-        assert.equal(res.body.message, authData.commonMsgs.unauthorized)
+        assert.equal(res.body.message, authData.commonValues.unauthorized)
     })
 
     it(`Should not able to login given deleted user `, async function () {
@@ -154,6 +154,6 @@ describe('@Integration -User journery for Auth operations', function () {
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[418])
-        assert.equal(res.body.errors.email, authData.commonMsgs.notInSystem)
+        assert.equal(res.body.errors.email, authData.commonValues.notInSystem)
     })
 })

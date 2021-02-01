@@ -63,13 +63,36 @@ export default class ErrorData {
     /**
      * This function returns common messages 
      */
-    get commonMsgs() {
+    get commonValues() {
         return {
-            invalidData: "The given data was invalid.",
             unauthorized: "Unauthenticated.",
             actionUnauthorized: "This action is unauthorized.",
             notInSystem: "Not In our system",
-            tokenBlacklisted: "The token has been blacklisted"
+            tokenBlacklisted: "The token has been blacklisted",
+            credentialNotMatch: "These credentials do not match our records.",
+
+            invalidData: "The given data was invalid.",
+            invalidPasswordConfirmation: "The password confirmation does not match.",
+            invalidName: "The name may only contain letters, numbers, dashes and underscores.",
+            invalidEmail: "The email must be a valid email address.",
+            invalidPassword: "The password must be at least 8 characters.",
+
+            emptyName: "The name field is required.",
+            emptyEmail: "The email field is required.",
+            emptyPassword: "The password field is required."
+        }
+    }
+
+    /**
+     * This function returns common field labels 
+     */
+    get commonKeys() {
+        return {
+            name: "name",
+            email: "email",
+            password: "password",
+            password_confirmation: "password_confirmation",
+            message: "message",
         }
     }
 

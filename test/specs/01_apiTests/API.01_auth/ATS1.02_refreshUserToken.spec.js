@@ -57,6 +57,6 @@ describe('@API Test User Token Refresh - Endpoint: ' + endpoints.refreshTokenURL
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[400])
-        assert.equal(res.body.message, authData.commonMsgs.tokenBlacklisted)
+        assert.equal(res.body.message, authData.commonValues.tokenBlacklisted)
     })
 })

@@ -5,27 +5,6 @@ class AuthData extends BaseData {
     //This class defines test data specific to Auth related endpoints
 
     /**
-     * This function defines all the text messages and key labels specific to register user endpoint
-     */
-    get _registerUserText() {
-        return {
-            name: "name",
-            email: "email",
-            password: "password",
-            password_confirmation: "password_confirmation",
-
-            invalidPasswordConfirmation: "The password confirmation does not match.",
-            invalidName: "The name may only contain letters, numbers, dashes and underscores.",
-            invalidEmail: "The email must be a valid email address.",
-            invalidPassword: "The password must be at least 8 characters.",
-
-            emptyName: "The name field is required.",
-            emptyEmail: "The email field is required.",
-            emptyPassword: "The password field is required."
-        }
-    }
-
-    /**
      * This function defines the list of testdata to be used for register user endpoint.
      */
     get _registerUser() {
@@ -55,10 +34,10 @@ class AuthData extends BaseData {
             },
             validData: {
                 reqBody: {
-                    [this._registerUserText.name]: this.fakeFirstName,
-                    [this._registerUserText.email]: this.fakeEmail,
-                    [this._registerUserText.password]: "testPassword",
-                    [this._registerUserText.password_confirmation]: "testPassword"
+                    [this.commonKeys.name]: this.fakeFirstName,
+                    [this.commonKeys.email]: this.fakeEmail,
+                    [this.commonKeys.password]: "testPassword",
+                    [this.commonKeys.password_confirmation]: "testPassword"
                 },
                 reqHeader: {
                     'Content-Type': 'application/json'
@@ -67,10 +46,10 @@ class AuthData extends BaseData {
 
             updateUserData: {
                 reqBody: {
-                    [this._registerUserText.name]: this.fakeFirstName,
-                    [this._registerUserText.email]: this.fakeEmail,
-                    [this._registerUserText.password]: "newPassword",
-                    [this._registerUserText.password_confirmation]: "newPassword"
+                    [this.commonKeys.name]: this.fakeFirstName,
+                    [this.commonKeys.email]: this.fakeEmail,
+                    [this.commonKeys.password]: "newPassword",
+                    [this.commonKeys.password_confirmation]: "newPassword"
                 },
                 reqHeader: {
                     'Content-Type': 'application/json'
@@ -79,10 +58,10 @@ class AuthData extends BaseData {
             validDataList: [{
                     testName: "Standard inputs",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "testPassword",
-                        [this._registerUserText.password_confirmation]: "testPassword"
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "testPassword",
+                        [this.commonKeys.password_confirmation]: "testPassword"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
@@ -91,10 +70,10 @@ class AuthData extends BaseData {
                 {
                     testName: "Name with underscore and dashes | password with special characters",
                     reqBody: {
-                        [this._registerUserText.name]: "_" + this.fakeFirstName + "-" + this.fakeFirstName,
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "`~!@#$%^&*()_+-={}:<>?,./;'[]|",
-                        [this._registerUserText.password_confirmation]: "`~!@#$%^&*()_+-={}:<>?,./;'[]|"
+                        [this.commonKeys.name]: "_" + this.fakeFirstName + "-" + this.fakeFirstName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "`~!@#$%^&*()_+-={}:<>?,./;'[]|",
+                        [this.commonKeys.password_confirmation]: "`~!@#$%^&*()_+-={}:<>?,./;'[]|"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
@@ -103,10 +82,10 @@ class AuthData extends BaseData {
                 {
                     testName: "Input Name and password as number only",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeNumber(6),
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "12345678",
-                        [this._registerUserText.password_confirmation]: "12345678"
+                        [this.commonKeys.name]: this.fakeNumber(6),
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "12345678",
+                        [this.commonKeys.password_confirmation]: "12345678"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
@@ -117,141 +96,212 @@ class AuthData extends BaseData {
             invalidDataList: [{
                     testName: "Name - Space between name",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFullName,
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "testPassword",
-                        [this._registerUserText.password_confirmation]: "testPassword"
+                        [this.commonKeys.name]: this.fakeFullName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "testPassword",
+                        [this.commonKeys.password_confirmation]: "testPassword"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.name]: [this._registerUserText.invalidName]
+                        [this.commonKeys.name]: [this.commonValues.invalidName]
                     }
                 },
                 {
                     testName: "Name - Unsupported special characters",
                     reqBody: {
-                        [this._registerUserText.name]: "@#$%",
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "testPassword",
-                        [this._registerUserText.password_confirmation]: "testPassword"
+                        [this.commonKeys.name]: "@#$%",
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "testPassword",
+                        [this.commonKeys.password_confirmation]: "testPassword"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.name]: [this._registerUserText.invalidName]
+                        [this.commonKeys.name]: [this.commonValues.invalidName]
                     }
                 },
                 {
                     testName: "Email Id - No email domain",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
-                        [this._registerUserText.email]: "test",
-                        [this._registerUserText.password]: "12345678",
-                        [this._registerUserText.password_confirmation]: "12345678"
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: "test",
+                        [this.commonKeys.password]: "12345678",
+                        [this.commonKeys.password_confirmation]: "12345678"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.email]: [this._registerUserText.invalidEmail]
+                        [this.commonKeys.email]: [this.commonValues.invalidEmail]
                     }
                 },
                 {
                     testName: "Email Id - Space between email id",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
-                        [this._registerUserText.email]: "test @test.com",
-                        [this._registerUserText.password]: "12345678",
-                        [this._registerUserText.password_confirmation]: "12345678"
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: "test @test.com",
+                        [this.commonKeys.password]: "12345678",
+                        [this.commonKeys.password_confirmation]: "12345678"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.email]: [this._registerUserText.invalidEmail]
+                        [this.commonKeys.email]: [this.commonValues.invalidEmail]
                     }
                 },
                 {
                     testName: "Password - Password less than 8 characters",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "1234567",
-                        [this._registerUserText.password_confirmation]: "1234567"
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "1234567",
+                        [this.commonKeys.password_confirmation]: "1234567"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.password]: [this._registerUserText.invalidPassword]
+                        [this.commonKeys.password]: [this.commonValues.invalidPassword]
                     }
                 },
                 {
                     testName: "Password - Password and password_confirmation input different",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "testPassword",
-                        [this._registerUserText.password_confirmation]: "passwordtest"
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "testPassword",
+                        [this.commonKeys.password_confirmation]: "passwordtest"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.password]: [this._registerUserText.invalidPasswordConfirmation]
+                        [this.commonKeys.password]: [this.commonValues.invalidPasswordConfirmation]
+                    }
+                },
+                {
+                    testName: "Password - Blank password confirmation field",
+                    reqBody: {
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "testPassword",
+                        [this.commonKeys.password_confirmation]: ""
+                    },
+                    reqHeader: {
+                        'Content-Type': 'application/json'
+                    },
+                    expectedErr: {
+                        [this.commonKeys.password]: [this.commonValues.invalidPasswordConfirmation]
                     }
                 },
                 {
                     testName: "Password - Space between password input",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFirstName,
-                        [this._registerUserText.email]: this.fakeEmail,
-                        [this._registerUserText.password]: "1234 567",
-                        [this._registerUserText.password_confirmation]: "1234 567"
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "1234 567",
+                        [this.commonKeys.password_confirmation]: "1234 567"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.password]: [this._registerUserText.invalidPassword]
+                        [this.commonKeys.password]: [this.commonValues.invalidPassword]
                     }
                 },
                 {
                     testName: "All inputs",
                     reqBody: {
-                        [this._registerUserText.name]: this.fakeFullName,
-                        [this._registerUserText.email]: "test",
-                        [this._registerUserText.password]: "1234567",
-                        [this._registerUserText.password_confirmation]: "123456"
+                        [this.commonKeys.name]: this.fakeFullName,
+                        [this.commonKeys.email]: "test",
+                        [this.commonKeys.password]: "1234567",
+                        [this.commonKeys.password_confirmation]: "123456"
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.name]: [this._registerUserText.invalidName],
-                        [this._registerUserText.email]: [this._registerUserText.invalidEmail],
-                        [this._registerUserText.password]: [this._registerUserText.invalidPassword, this._registerUserText.invalidPasswordConfirmation]
+                        [this.commonKeys.name]: [this.commonValues.invalidName],
+                        [this.commonKeys.email]: [this.commonValues.invalidEmail],
+                        [this.commonKeys.password]: [this.commonValues.invalidPassword, this.commonValues.invalidPasswordConfirmation]
                     }
                 },
                 {
                     testName: "All inputs - As Empty",
                     reqBody: {
-                        [this._registerUserText.name]: "",
-                        [this._registerUserText.email]: "",
-                        [this._registerUserText.password]: "",
-                        [this._registerUserText.password_confirmation]: ""
+                        [this.commonKeys.name]: "",
+                        [this.commonKeys.email]: "",
+                        [this.commonKeys.password]: "",
+                        [this.commonKeys.password_confirmation]: ""
                     },
                     reqHeader: {
                         'Content-Type': 'application/json'
                     },
                     expectedErr: {
-                        [this._registerUserText.name]: [this._registerUserText.emptyName],
-                        [this._registerUserText.email]: [this._registerUserText.emptyEmail],
-                        [this._registerUserText.password]: [this._registerUserText.emptyPassword]
+                        [this.commonKeys.name]: [this.commonValues.emptyName],
+                        [this.commonKeys.email]: [this.commonValues.emptyEmail],
+                        [this.commonKeys.password]: [this.commonValues.emptyPassword]
                     }
+                }
+            ]
+        }
+    }
+
+    get _loginUser() {
+        return {
+            invalidPasswordList: [{
+                    testName: "Incorrect Password",
+                    [this.commonKeys.password]: "wrongPassword",
+                    status: this.status[401],
+                    expectedErr: {
+                        [this.commonKeys.message]: undefined,
+                        [this.commonKeys.email]: this.commonValues.credentialNotMatch
+                    }
+
+                },
+                {
+                    testName: "Blank Password",
+                    [this.commonKeys.password]: "",
+                    status: this.status[422],
+                    expectedErr: {
+                        [this.commonKeys.message]: this.commonValues.invalidData,
+                        [this.commonKeys.password]: this.commonValues.emptyPassword
+                    }
+
+                }
+            ],
+
+            invalidEmailPasswordList: [{
+                    testName: "Empty Email and Password",
+                    userCredential: {
+                        [this.commonKeys.email]: "",
+                        [this.commonKeys.password]: ""
+                    },
+                    status: this.status[422],
+
+                    expectedErr: {
+                        [this.commonKeys.message]: this.commonValues.invalidData,
+                        [this.commonKeys.email]: this.commonValues.emptyEmail,
+                        [this.commonKeys.password]: this.commonValues.emptyPassword
+                    }
+                },
+                {
+                    testName: "Incorrect Email and Password",
+                    userCredential: {
+                        [this.commonKeys.email]: "wrongEmail@test.com",
+                        [this.commonKeys.password]: "wrongPassword"
+                    },
+                    status: this.status[418],
+                    expectedErr: {
+                        [this.commonKeys.message]: undefined,
+                        [this.commonKeys.email]: this.commonValues.notInSystem,
+                        [this.commonKeys.password]: undefined
+                    }
+
                 }
             ]
         }

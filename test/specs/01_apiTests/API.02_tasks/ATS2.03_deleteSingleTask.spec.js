@@ -34,7 +34,7 @@ describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskUR
 
             //Asserting the Response
             assert.deepEqual(res.status, tasksData.status[404])
-            assert.equal(res.body.message, tasksData.commonMsgs.invalidData)
+            assert.equal(res.body.message, tasksData.commonValues.invalidData)
         })
     })
 })

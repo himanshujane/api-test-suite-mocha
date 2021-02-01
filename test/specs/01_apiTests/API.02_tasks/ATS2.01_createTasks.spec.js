@@ -50,7 +50,7 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
 
             //Asserting the Response
             assert.deepEqual(res.status, tasksData.status[422])
-            assert.equal(res.body.message, tasksData.commonMsgs.invalidData)
+            assert.equal(res.body.message, tasksData.commonValues.invalidData)
             assert.deepEqual(res.body.errors, reqData.expectedErr)
         })
     })
@@ -68,6 +68,6 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
 
         //Asserting the Response
         assert.deepEqual(res.status, tasksData.status[401])
-        assert.equal(res.body.message, tasksData.commonMsgs.unauthorized)
+        assert.equal(res.body.message, tasksData.commonValues.unauthorized)
     })
 })

@@ -11,7 +11,7 @@ class CommonSnippets {
     assert403(res) {
 
         assert.deepEqual(res.status, tasksData.status[403])
-        assert.equal(res.body.message, tasksData.commonMsgs.actionUnauthorized)
+        assert.equal(res.body.message, tasksData.commonValues.actionUnauthorized)
         assert.equal((Object.keys(res.body).length), 1)
     }
 
