@@ -128,7 +128,7 @@ class AuthHelper extends HttpUtil {
     /**
      * This function helps to create a new valid user
      * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @returns {object} - New user datails
+     * @returns {object} - New user details
      */
     async getNewUser(scope = null) {
 

@@ -64,14 +64,14 @@ export default class HttpUtil extends BaseUtil {
      * @returns {object} - this returns the entire response in required format
      */
     delete(reqURL, reqHeader = "", resType = "json") {
-
+     
         const requestOptions = {
             method: 'DELETE',
             headers: reqHeader,
             timeout: 20000
         }
         console.log("Making DELETE Request to : ", reqURL)
-        return fetch(reqURL, requestOptions).then(this.handleResponse, resType)
+        return fetch(reqURL, requestOptions).then(res => this.handleResponse(res,resType))
     }
 
     //HTTP Helper function
@@ -83,10 +83,12 @@ export default class HttpUtil extends BaseUtil {
      * @returns {object} - this returns the entire response in required format
      */
     async handleResponse(response, resType = "json") {
-
-        if (resType == "json") {
-            var body = await response.json().catch(err => console.log("*WARNING: No JSON response in body*"))
-        } else var body = await response.text().catch(err => console.log("*WARNING: No response in body*"))
+     
+        var body
+        if (resType == "json")
+            body = await response.json().catch(err => console.log("*WARNING: No JSON response in body*"))
+        else
+            body = await response.text().catch(err => console.log("*WARNING: No response in body*"))
 
         return {
             status: {

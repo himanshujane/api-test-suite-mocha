@@ -90,7 +90,19 @@ class AuthData extends BaseData {
                     reqHeader: {
                         'Content-Type': 'application/json'
                     }
-                }
+                },
+                {
+                    testName: "Password - Space between password input",
+                    reqBody: {
+                        [this.commonKeys.name]: this.fakeFirstName,
+                        [this.commonKeys.email]: this.fakeEmail,
+                        [this.commonKeys.password]: "1234 678",
+                        [this.commonKeys.password_confirmation]: "1234 678"
+                    },
+                    reqHeader: {
+                        'Content-Type': 'application/json'
+                    }
+                },
             ],
 
             invalidDataList: [{
@@ -199,21 +211,6 @@ class AuthData extends BaseData {
                     }
                 },
                 {
-                    testName: "Password - Space between password input",
-                    reqBody: {
-                        [this.commonKeys.name]: this.fakeFirstName,
-                        [this.commonKeys.email]: this.fakeEmail,
-                        [this.commonKeys.password]: "1234 567",
-                        [this.commonKeys.password_confirmation]: "1234 567"
-                    },
-                    reqHeader: {
-                        'Content-Type': 'application/json'
-                    },
-                    expectedErr: {
-                        [this.commonKeys.password]: [this.commonValues.invalidPassword]
-                    }
-                },
-                {
                     testName: "All inputs",
                     reqBody: {
                         [this.commonKeys.name]: this.fakeFullName,
@@ -261,7 +258,6 @@ class AuthData extends BaseData {
                         [this.commonKeys.message]: undefined,
                         [this.commonKeys.email]: this.commonValues.credentialNotMatch
                     }
-
                 },
                 {
                     testName: "Blank Password",

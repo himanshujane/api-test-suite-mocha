@@ -5,7 +5,7 @@ import tasksData from '../dataProvider/tasks.data.js'
 class TasksHelper extends HttpUtil {
 
     /**
-     * This function creats a new task for given user
+     * This function creates a new task for given user
      * @param {object} scope - this is object of calling testcase which is used to set context in report.
      * @param {object} reqData - this contains all the test data to pass in request
      * @returns {object} - contains details of newly created task
@@ -72,7 +72,7 @@ class TasksHelper extends HttpUtil {
      * @param {object} reqData - contains new task details
      * @param {object} token - user token
      * @param {number} taskId - task id
-     * @returns {object} - contains udpated task details 
+     * @returns {object} - contains updated task details 
      */
     async updateTask(scope, reqData, token, taskId) {
 
@@ -94,7 +94,7 @@ class TasksHelper extends HttpUtil {
      * @param {string} token - Accepts a user token
      * @returns {object} - contains new task details for given user
      */
-    async setNewTask(token) {
+    async setNewTask(token, scope = null) {
 
         var reqData = tasksData._createTasks.validData
 
@@ -104,6 +104,9 @@ class TasksHelper extends HttpUtil {
         const reqURL = Endpoints.createTasksURL
         const response = await this.post(reqURL, reqData)
 
+        if (scope != null) {
+            this.setContext(scope, reqURL, reqData, response)
+        }
         return response.body.data
     }
 }

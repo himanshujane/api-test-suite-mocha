@@ -2,7 +2,7 @@ module.exports = {
     
     //Define Environment
     HOSTNAME : process.env.HOSTNAME ? process.env.HOSTNAME : 'http://localhost',
-    PORT: process.env.PORT ? process.env.PORT : ':8000',
+    PORT: process.env.PORT ? process.env.PORT : '8000',
 
     //Define specs for test execution.[array]
     spec: ["test/specs/01*/**/*.spec.js","test/specs/02*/**/*.spec.js"],

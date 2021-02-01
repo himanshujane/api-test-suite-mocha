@@ -56,7 +56,7 @@ describe('@API Test User Token Refresh - Endpoint: ' + endpoints.refreshTokenURL
         res = await authHelper.refreshToken(this, _newUser2.token)
 
         //Asserting the Response
-        assert.deepEqual(res.status, authData.status[400])
+        assert.deepEqual(res.status, authData.status[401])
         assert.equal(res.body.message, authData.commonValues.tokenBlacklisted)
     })
 })

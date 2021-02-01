@@ -79,7 +79,9 @@ export default class ErrorData {
 
             emptyName: "The name field is required.",
             emptyEmail: "The email field is required.",
-            emptyPassword: "The password field is required."
+            emptyPassword: "The password field is required.",
+            emptyTitle: "The title field is required.",
+            titleCharLimit: "The title may not be greater than 255 characters.",
         }
     }
 
@@ -93,6 +95,8 @@ export default class ErrorData {
             password: "password",
             password_confirmation: "password_confirmation",
             message: "message",
+            title: "title",
+            isCompleted: "is_completed",
         }
     }
 
@@ -118,7 +122,7 @@ export default class ErrorData {
     }
 
     get fakeEmail() {
-        return faker.internet.email()
+        return this.fakeAlphaNumeric(5)+faker.internet.email()
     }
 
     get fakeText() {

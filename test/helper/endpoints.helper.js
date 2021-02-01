@@ -9,7 +9,10 @@ export default class Endpoints {
     //Start of Auth Endpoint
 
     static get baseURL() {
-        return config.HOSTNAME + config.PORT
+        if (config.PORT != "") {
+            return config.HOSTNAME + ":" + config.PORT
+        } 
+        return config.HOSTNAME
     }
 
     static get registerUserURL() {
@@ -61,5 +64,4 @@ export default class Endpoints {
     }
 
     //end
-
 }

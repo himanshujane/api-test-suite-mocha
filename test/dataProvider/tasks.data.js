@@ -4,18 +4,6 @@ class TasksData extends BaseData {
 
   //This class defines test data specific to Tasks related endpoints
 
-  /**
-   * This function defines all the text messages and key labels specific to create tasks endpoint
-   */
-  get _createTasksText() {
-    return {
-      title: "title",
-      isCompleted: "is_completed",
-
-      emptyTitle: "The title field is required.",
-      titleCharLimit: "The title may not be greater than 255 characters.",
-    }
-  }
 
   /**
    * This function defines the list of testdata to be used for creating tasks.
@@ -75,7 +63,7 @@ class TasksData extends BaseData {
       },
       validData: {
         reqBody: {
-          [this._createTasksText.title]: this.fakeText
+          [this.commonKeys.title]: this.fakeText
         },
         reqHeader: {
           'Content-Type': 'application/json'
@@ -85,7 +73,7 @@ class TasksData extends BaseData {
       validDataList: [{
           testName: "Basic title",
           reqBody: {
-            [this._createTasksText.title]: "This is test Title"
+            [this.commonKeys.title]: "This is test Title"
           },
           reqHeader: {
             'Content-Type': 'application/json'
@@ -94,7 +82,7 @@ class TasksData extends BaseData {
         {
           testName: "Duplicate title",
           reqBody: {
-            [this._createTasksText.title]: "This is test Title"
+            [this.commonKeys.title]: "This is test Title"
           },
           reqHeader: {
             'Content-Type': 'application/json'
@@ -103,7 +91,7 @@ class TasksData extends BaseData {
         {
           testName: "Title with length 255 char",
           reqBody: {
-            [this._createTasksText.title]: this.fakeAlphaNumeric(255)
+            [this.commonKeys.title]: this.fakeAlphaNumeric(255)
           },
           reqHeader: {
             'Content-Type': 'application/json'
@@ -114,37 +102,37 @@ class TasksData extends BaseData {
       invalidDataList: [{
           testName: "Empty title",
           reqBody: {
-            [this._createTasksText.title]: ""
+            [this.commonKeys.title]: ""
           },
           reqHeader: {
             'Content-Type': 'application/json'
           },
           expectedErr: {
-            [this._createTasksText.title]: [this._createTasksText.emptyTitle]
+            [this.commonKeys.title]: [this.commonValues.emptyTitle]
           }
         },
         {
           testName: "Greater than 255 char",
           reqBody: {
-            [this._createTasksText.title]: this.fakeAlphaNumeric(256)
+            [this.commonKeys.title]: this.fakeAlphaNumeric(256)
           },
           reqHeader: {
             'Content-Type': 'application/json'
           },
           expectedErr: {
-            [this._createTasksText.title]: [this._createTasksText.titleCharLimit]
+            [this.commonKeys.title]: [this.commonValues.titleCharLimit]
           }
         },
         {
           testName: "With Just a space",
           reqBody: {
-            [this._createTasksText.title]: " "
+            [this.commonKeys.title]: " "
           },
           reqHeader: {
             'Content-Type': 'application/json'
           },
           expectedErr: {
-            [this._createTasksText.title]: [this._createTasksText.emptyTitle]
+            [this.commonKeys.title]: [this.commonValues.emptyTitle]
           }
         },
         {
@@ -154,7 +142,7 @@ class TasksData extends BaseData {
             'Content-Type': 'application/json'
           },
           expectedErr: {
-            [this._createTasksText.title]: [this._createTasksText.emptyTitle]
+            [this.commonKeys.title]: [this.commonValues.emptyTitle]
           }
         }
       ]
@@ -315,8 +303,8 @@ class TasksData extends BaseData {
     return {
       validData: {
         reqBody: {
-          [this._createTasksText.title]: "Test Title 123",
-          [this._createTasksText.isCompleted]: true
+          [this.commonKeys.title]: "Test Title 123",
+          [this.commonKeys.isCompleted]: true
         },
         reqHeader: {
           'Content-Type': 'application/json'

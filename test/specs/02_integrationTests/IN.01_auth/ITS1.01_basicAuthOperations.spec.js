@@ -5,7 +5,7 @@ import authHelper from '../../../helper/auth.helper.js'
 import authData from '../../../dataProvider/auth.data.js'
 
 
-describe('@Integration -User journery for Auth operations', function () {
+describe('@Integration -User journey for Auth operations', function () {
 
     var _reqData = Object
     var _reqData2 = Object
@@ -133,7 +133,7 @@ describe('@Integration -User journery for Auth operations', function () {
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[202])
-        // assert.equal(res.body, "OK")
+        assert.equal(res.body, "OK")
     })
 
 

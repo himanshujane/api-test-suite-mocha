@@ -25,7 +25,7 @@ describe('@STRESS Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksUR
         startTime = new Date().getTime()
     })
 
-    afterEach("Endign the timer and calculating lowest and hightest time", function () {
+    afterEach("Ending the timer and calculating lowest and hightest time", function () {
         endTime = new Date().getTime()
         let diff = endTime - startTime
         if (diff > highest) {

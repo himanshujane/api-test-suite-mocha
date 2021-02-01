@@ -21,7 +21,7 @@ describe(`@Integration -Given User with its own token when operates on other use
     it(`Adding a task to user1`, async function () {
 
         //Adding a new task for user1
-        _user1Task = await tasksHelper.setNewTask(_newUser1.token)
+        _user1Task = await tasksHelper.setNewTask(_newUser1.token,this)
 
         //Asserting the Response for newTask1
         assert.isAbove(_user1Task.id, 0)

@@ -1,7 +1,7 @@
 {
   "name": "api-test-suite-mocha",
   "version": "1.0.0",
-  "description": "API Test Suite using Mocha Test Freamework",
+  "description": "API Test Suite using Mocha Test Framework",
   "main": "index.js",
   "scripts": {
     "test": "npx mocha",
