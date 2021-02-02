@@ -3,7 +3,7 @@ import faker from 'faker'
 export default class ErrorData {
 
     /**
-     * This function returns status code and status text.
+     * To return status code and status text.
      */
     get status() {
         return {
@@ -61,7 +61,7 @@ export default class ErrorData {
     }
 
     /**
-     * This function returns common messages 
+     * To return common values 
      */
     get commonValues() {
         return {
@@ -82,11 +82,13 @@ export default class ErrorData {
             emptyPassword: "The password field is required.",
             emptyTitle: "The title field is required.",
             titleCharLimit: "The title may not be greater than 255 characters.",
+            emailCharLimit: "The email may not be greater than 255 characters.",
+            nameCharLimit: "The name may not be greater than 255 characters."
         }
     }
 
     /**
-     * This function returns common field labels 
+     * To returns common key labels
      */
     get commonKeys() {
         return {
@@ -101,7 +103,7 @@ export default class ErrorData {
     }
 
     /**
-     * This function retruns Expired Token
+     * To return Expired Token
      */
     get expiredToken() {
         return {
@@ -130,7 +132,7 @@ export default class ErrorData {
     }
 
     /**
-     * @param {number} len - Length of the requested number 
+     * @param {number} len Length of the requested number 
      * @returns {number} 
      */
     fakeNumber(len) {
@@ -138,13 +140,16 @@ export default class ErrorData {
     }
 
     /**
-     * @param {number} len - Length of the requested string 
+     * @param {number} len Length of the requested string 
      * @returns {string} 
      */
     fakeAlphaNumeric(len) {
         return faker.random.alphaNumeric(len)
     }
 
+    /**
+     * @returns {string} Random 6 char String
+     */
     randomString() {
         return Math.random().toString(36).substring(7).toLowerCase();
     }

@@ -103,6 +103,18 @@ class AuthData extends BaseData {
                         'Content-Type': 'application/json'
                     }
                 },
+                {
+                    testName: "User name and email 255 char long",
+                    reqBody: {
+                        [this.commonKeys.name]: this.fakeAlphaNumeric(255),
+                        [this.commonKeys.email]: this.fakeAlphaNumeric(246) + "@test.com",
+                        [this.commonKeys.password]: "00000000",
+                        [this.commonKeys.password_confirmation]: "00000000"
+                    },
+                    reqHeader: {
+                        'Content-Type': 'application/json'
+                    }
+                }
             ],
 
             invalidDataList: [{
@@ -243,6 +255,37 @@ class AuthData extends BaseData {
                         [this.commonKeys.email]: [this.commonValues.emptyEmail],
                         [this.commonKeys.password]: [this.commonValues.emptyPassword]
                     }
+                },
+                {
+                    testName: "Request Body",
+                    reqBody: {
+                        firstname: "FirstName",
+                        lastname: "LastName"
+                    },
+                    reqHeader: {
+                        'Content-Type': 'application/json'
+                    },
+                    expectedErr: {
+                        [this.commonKeys.name]: [this.commonValues.emptyName],
+                        [this.commonKeys.email]: [this.commonValues.emptyEmail],
+                        [this.commonKeys.password]: [this.commonValues.emptyPassword]
+                    }
+                },
+                {
+                    testName: "User name and email greater than 255 char long",
+                    reqBody: {
+                        [this.commonKeys.name]: this.fakeAlphaNumeric(256),
+                        [this.commonKeys.email]: this.fakeAlphaNumeric(247) + "@test.com",
+                        [this.commonKeys.password]: "********",
+                        [this.commonKeys.password_confirmation]: "********"
+                    },
+                    reqHeader: {
+                        'Content-Type': 'application/json'
+                    },
+                    expectedErr: {
+                        [this.commonKeys.name]: [this.commonValues.nameCharLimit],
+                        [this.commonKeys.email]: [this.commonValues.emailCharLimit]
+                    }
                 }
             ]
         }
@@ -296,6 +339,51 @@ class AuthData extends BaseData {
                         [this.commonKeys.password]: undefined
                     }
 
+                }
+            ]
+        }
+    }
+
+    get _getUser() {
+        return {
+            getUserSchema: {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "name",
+                            "email"
+                        ]
+                    }
+                },
+                "required": [
+                    "data"
+                ]
+            },
+            invalidDataList: [{
+                    testName: "Expired token",
+                    token: this.expiredToken
+                },
+                {
+                    testName: "Empty",
+                    token: ""
+                },
+                {
+                    testName: "Invalid token",
+                    token: JSON.parse(`{"Authorization" : "Bearer invalidtoken"}`)
                 }
             ]
         }

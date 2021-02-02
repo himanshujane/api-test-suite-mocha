@@ -77,6 +77,10 @@ class TasksData extends BaseData {
           },
           reqHeader: {
             'Content-Type': 'application/json'
+          },
+          expectedResponse: {
+            [this.commonKeys.isCompleted]: false,
+            [this.commonKeys.due_at]: null
           }
         },
         {
@@ -86,6 +90,10 @@ class TasksData extends BaseData {
           },
           reqHeader: {
             'Content-Type': 'application/json'
+          },
+          expectedResponse: {
+            [this.commonKeys.isCompleted]: false,
+            [this.commonKeys.due_at]: null
           }
         },
         {
@@ -95,6 +103,25 @@ class TasksData extends BaseData {
           },
           reqHeader: {
             'Content-Type': 'application/json'
+          },
+          expectedResponse: {
+            [this.commonKeys.isCompleted]: false,
+            [this.commonKeys.due_at]: null
+          }
+        },
+        {
+          testName: "Title with is_completed status as true and due by date",
+          reqBody: {
+            [this.commonKeys.title]: this.fakeAlphaNumeric(10),
+            [this.commonKeys.isCompleted]: true,
+            [this.commonKeys.due_at]: "12:12:2020"
+          },
+          reqHeader: {
+            'Content-Type': 'application/json'
+          },
+          expectedResponse: {
+            [this.commonKeys.isCompleted]: true,
+            [this.commonKeys.due_at]: "2020-12-12T00:00:00+00:00"
           }
         }
       ],
@@ -281,6 +308,9 @@ class TasksData extends BaseData {
   get _deleteTask() {
     return {
       invalidDataList: [{
+          testName: "Task ID is special char",
+          taskId: "*",
+        }, {
           testName: "Task ID is ==> 0",
           taskId: 0,
         },

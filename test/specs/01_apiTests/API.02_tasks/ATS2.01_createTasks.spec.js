@@ -23,15 +23,15 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
             const res = await tasksHelper.createTasks(this, reqData, _newUser.jsonToken)
 
             //Asserting the Response
-            assert.jsonSchema(res.body, tasksData._createTasks.createTasksSchema)
             assert.deepEqual(res.status, tasksData.status[201])
+            assert.jsonSchema(res.body, tasksData._createTasks.createTasksSchema)
             assert.equal(res.body.data.author.id, _newUser.id)
             assert.equal(res.body.data.author.name, _newUser.name)
             assert.equal(res.body.data.author.email, _newUser.email)
             assert.isAbove(res.body.data.id, 0)
             assert.equal(res.body.data.title, reqData.reqBody.title)
-            assert.equal(res.body.data.due_at, null)
-            assert.equal(res.body.data.is_completed, false)
+            assert.equal(res.body.data.due_at, reqData.expectedResponse.due_at)
+            assert.equal(res.body.data.is_completed, reqData.expectedResponse.is_completed)
             assert.equal(res.headers.get('content-type'), "application/json")
         })
     })

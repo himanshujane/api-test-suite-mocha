@@ -24,6 +24,7 @@ describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskUR
 
         //Asserting the Response
         assert.deepEqual(res.status, tasksData.status[204])
+        assert.isUndefined(res.body)
     })
 
     tasksData._deleteTask.invalidDataList.forEach(async function (test, index) {
