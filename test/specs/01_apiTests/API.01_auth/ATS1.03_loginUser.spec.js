@@ -19,14 +19,8 @@ describe('@API Test User Login - Endpoint: ' + endpoints.loginUserURL, function 
 
     it(`Positive- Able to login user`, async function () {
 
-        //Setting testdata for request
-        const userCredential = {
-            "email": _newUser.email,
-            "password": _newUser.password
-        }
-
         //Making request to login user
-        const res = await authHelper.loginUser(this, userCredential)
+        const res = await authHelper.loginUser(this, _newUser.email, _newUser.password)
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[201])
@@ -40,14 +34,8 @@ describe('@API Test User Login - Endpoint: ' + endpoints.loginUserURL, function 
     authData._loginUser.invalidPasswordList.forEach(async function (reqData, index) {
         it(`Negative -Login with invalid password: ${index+1} - ${reqData.testName}`, async function () {
 
-            //Setting testdata for request
-            const userCredential = {
-                "email": _newUser.email,
-                "password": reqData.password
-            }
-
             //Making request to login user
-            const res = await authHelper.loginUser(this, userCredential)
+            const res = await authHelper.loginUser(this, _newUser.email, reqData.password)
 
             //Asserting the Response
             assert.deepEqual(res.status, reqData.status)
@@ -60,7 +48,7 @@ describe('@API Test User Login - Endpoint: ' + endpoints.loginUserURL, function 
         it(`Negative -Login with invalid email and password: ${index+1} - ${reqData.testName}`, async function () {
 
             //Making request to login user
-            const res = await authHelper.loginUser(this, reqData.userCredential)
+            const res = await authHelper.loginUser(this, reqData.email, reqData.password)
 
             //Asserting the Response
             assert.deepEqual(res.status, reqData.status)

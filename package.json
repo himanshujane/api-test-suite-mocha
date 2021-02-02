@@ -6,7 +6,9 @@
   "scripts": {
     "test": "npx mocha",
     "serial": "npx mocha --no-parallel",
-    "stress": "npx mocha spec 'test/specs/03_stressTests/*.js' --grep @STRESS --no-parallel"
+    "stress": "npx mocha --spec 'test/specs/**/*.spec.js' --grep @STRESS --no-parallel",
+    "api": "npx mocha --spec 'test/specs/**/*.spec.js' --grep @API --no-parallel",
+    "integration": "npx mocha --spec 'test/specs/**/*.spec.js' --grep @INTEGRATION --no-parallel"
   },
   "repository": {
     "type": "git",

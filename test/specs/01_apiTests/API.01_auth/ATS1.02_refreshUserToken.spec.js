@@ -12,14 +12,14 @@ describe('@API Test User Token Refresh - Endpoint: ' + endpoints.refreshTokenURL
     var _i = 1
     var _newUser = Object
     var _newUser2 = Object
-    var _userTokenJson = JSON
+    var _userTokenJson = Object
     var _userToken = String
 
     before('Setting Prerequisite data', async function () {
         //Registering a new user
         _newUser = await authHelper.getNewUser(this)
-        _userTokenJson = _newUser.token
-        _userToken = _newUser.tokenOnly
+        _userTokenJson = _newUser.jsonToken
+        _userToken = _newUser.token
         _newUser2 = await authHelper.getNewUser(this)
     })
 
@@ -39,7 +39,7 @@ describe('@API Test User Token Refresh - Endpoint: ' + endpoints.refreshTokenURL
 
             //updating token with new refreshed token
             _userToken = res.body.access_token
-            _userTokenJson = JSON.parse(`{"Authorization" : "Bearer ${_userToken}"}`)
+            _userTokenJson = await authHelper.getJsonToken(_userToken)
         })
         _i++
     }
@@ -47,13 +47,13 @@ describe('@API Test User Token Refresh - Endpoint: ' + endpoints.refreshTokenURL
     it(`Negative -Refreshing same Token again`, async function () {
 
         //Making request to refresh the token for first time
-        var res = await authHelper.refreshToken(this, _newUser2.token)
+        var res = await authHelper.refreshToken(this, _newUser2.jsonToken)
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[201])
 
         //Making request to refresh the same token again
-        res = await authHelper.refreshToken(this, _newUser2.token)
+        res = await authHelper.refreshToken(this, _newUser2.jsonToken)
 
         //Asserting the Response
         assert.deepEqual(res.status, authData.status[401])

@@ -40,7 +40,7 @@ module.exports = {
     parallel: true,
     
     //Maximum jobs for parallel run [number]
-    jobs: 10,
+    jobs: 15,
 
     //Retry failed tests this many times [number]
     //retries: 1

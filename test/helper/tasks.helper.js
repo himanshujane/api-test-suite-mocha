@@ -5,12 +5,16 @@ import tasksData from '../dataProvider/tasks.data.js'
 class TasksHelper extends HttpUtil {
 
     /**
-     * This function creates a new task for given user
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} reqData - this contains all the test data to pass in request
-     * @returns {object} - contains details of newly created task
+     * To create a new task
+     * @param {object} scope To set context in report.
+     * @param {object} reqData Request body and headers.
+     * @param {object} jsonToken Token in Json format.
+     * @returns {object} Task details. [data {id|title|due_at|is_completed|author{id|name|email}}]
      */
-    async createTasks(scope, reqData) {
+    async createTasks(scope, reqData, jsonToken) {
+
+        //Adding token to request Header
+        Object.assign(reqData.reqHeader, jsonToken)
 
         const reqURL = Endpoints.createTasksURL
         const response = await this.post(reqURL, reqData)
@@ -20,64 +24,64 @@ class TasksHelper extends HttpUtil {
     }
 
     /**
-     * This function gets all the tasks for given user
-     * @param {object} scope -this is object of calling testcase which is used to set context in report.
-     * @param {string} reqHeader - contains token
-     * @returns {object} - contains list of all the tasks for given user
+     * To get all the task
+     * @param {object} scope To set context in report.
+     * @param {object} jsonToken Token in Json format.
+     * @returns {object} List of all the Tasks. [data {id|title|due_at|is_completed|author{id|name|email}}]
      */
-    async getAllTasks(scope, reqHeader) {
+    async getAllTasks(scope, jsonToken) {
 
         const reqURL = Endpoints.getAllTasksURL
-        const response = await this.get(reqURL, reqHeader)
+        const response = await this.get(reqURL, jsonToken)
 
-        this.setContext(scope, reqURL, reqHeader, response)
+        this.setContext(scope, reqURL, jsonToken, response)
         return response
     }
 
     /**
-     * This function deletes a given task for given user
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} token - user token
-     * @param {number} taskId - task id
-     * @returns {object} - contains request status
+     * To delete a given task
+     * @param {object} scope To set context in report.
+     * @param {object} jsonToken Token in Json format.
+     * @param {number} taskId User's Task Id
+     * @returns {object} Default response
      */
-    async deleteTask(scope, token, taskId) {
+    async deleteTask(scope, jsonToken, taskId) {
 
         const reqURL = Endpoints.deleteTaskURL(taskId)
-        const response = await this.delete(reqURL, token)
+        const response = await this.delete(reqURL, jsonToken)
 
-        this.setContext(scope, reqURL, token, response)
+        this.setContext(scope, reqURL, jsonToken, response)
         return response
     }
 
     /**
-     * This function gets a given task for given user
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} token - user token
-     * @param {number} taskId - task id
-     * @returns {object} - contains given task details 
+     * To get a given task
+     * @param {object} scope To set context in report.
+     * @param {object} jsonToken Token in Json format.
+     * @param {number} taskId  User's Task Id
+     * @returns {object} Task details. [data {id|title|due_at|is_completed|author{id|name|email}}]
      */
-    async getTask(scope, token, taskId) {
+    async getTask(scope, jsonToken, taskId) {
 
         const reqURL = Endpoints.getTaskURL(taskId)
-        const response = await this.get(reqURL, token)
+        const response = await this.get(reqURL, jsonToken)
 
-        this.setContext(scope, reqURL, token, response)
+        this.setContext(scope, reqURL, jsonToken, response)
         return response
     }
 
     /**
-     * this function updates the task
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} reqData - contains new task details
-     * @param {object} token - user token
-     * @param {number} taskId - task id
-     * @returns {object} - contains updated task details 
+     * To update a given task
+     * @param {object} scope To set context in report.
+     * @param {object} reqData Request body and headers.
+     * @param {object} jsonToken Token in Json format.
+     * @param {number} taskId User's Task Id
+     * @returns {object} Updated Task details. [data {id|title|due_at|is_completed|author{id|name|email}}]
      */
-    async updateTask(scope, reqData, token, taskId) {
+    async updateTask(scope, reqData, jsonToken, taskId) {
 
         //Adding token to request Header
-        Object.assign(reqData.reqHeader, token)
+        Object.assign(reqData.reqHeader, jsonToken)
 
         const reqURL = Endpoints.updateTaskURL(taskId)
         const response = await this.put(reqURL, reqData)
@@ -87,12 +91,13 @@ class TasksHelper extends HttpUtil {
     }
 
 
-    //Helper functions to setup data
+    //Helper functions for data setup
 
     /**
-     * This function helps to create a new task for given user
-     * @param {string} token - Accepts a user token
-     * @returns {object} - contains new task details for given user
+     * To create a new task
+     * @param {string} jsonToken Token in Json format.
+     * @param {object} scope Optional - To set context in report.
+     * @returns {object} Task details. [data {id|title|due_at|is_completed|author{id|name|email}}]
      */
     async setNewTask(token, scope = null) {
 

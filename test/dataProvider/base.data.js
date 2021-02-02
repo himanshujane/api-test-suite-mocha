@@ -122,11 +122,11 @@ export default class ErrorData {
     }
 
     get fakeEmail() {
-        return this.fakeAlphaNumeric(5)+faker.internet.email()
+        return this.randomString() + faker.internet.email()
     }
 
     get fakeText() {
-        return faker.lorem.words(5)
+        return this.randomString() + faker.lorem.words(5)
     }
 
     /**
@@ -143,5 +143,9 @@ export default class ErrorData {
      */
     fakeAlphaNumeric(len) {
         return faker.random.alphaNumeric(len)
+    }
+
+    randomString() {
+        return Math.random().toString(36).substring(7).toLowerCase();
     }
 }

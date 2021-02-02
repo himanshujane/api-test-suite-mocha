@@ -18,7 +18,7 @@ describe('@STRESS Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksUR
 
     before('Setting Prerequisite data', async function () {
         newUser = await authHelper.getNewUser()
-        newTask1 = await tasksHelper.setNewTask(newUser.token)
+        newTask1 = await tasksHelper.setNewTask(newUser.jsonToken)
     })
 
     beforeEach("Starting the timer", function () {
@@ -46,7 +46,7 @@ describe('@STRESS Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksUR
         it(`Getting All Tasks - Iteration: ${i}`, async function () {
 
             //Making API request and saving response in a variable
-            const res = await tasksHelper.getAllTasks(this, newUser.token)
+            const res = await tasksHelper.getAllTasks(this, newUser.jsonToken)
 
             //Asserting the Response
             assert.deepEqual(res.status, tasksData.status[200])

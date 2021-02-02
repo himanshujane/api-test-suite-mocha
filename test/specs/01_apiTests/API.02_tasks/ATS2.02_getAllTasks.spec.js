@@ -21,7 +21,7 @@ describe('@API Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, 
         it(`Positive-Getting All the tasks: ${index+1} - ${reqData.testName}`, async function () {
 
             //Making API request and saving response in a variable
-            const res = await tasksHelper.getAllTasks(this, _newUser.token)
+            const res = await tasksHelper.getAllTasks(this, _newUser.jsonToken)
 
             //Asserting the Response
             assert.deepEqual(res.status, tasksData.status[200])
@@ -29,13 +29,13 @@ describe('@API Test Getting All Tasks - Endpoint: ' + endpoints.getAllTasksURL, 
             //Asserting when there is no task
             if (index == 0) {
                 assert.deepEqual(res.body.data, [])
-                _newTask1 = await tasksHelper.setNewTask(_newUser.token)
+                _newTask1 = await tasksHelper.setNewTask(_newUser.jsonToken)
             }
 
             //Asserting when there is only one task
             else if (index == 1) {
                 assert.deepEqual(res.body.data[0], _newTask1)
-                _newTask2 = await tasksHelper.setNewTask(_newUser.token)
+                _newTask2 = await tasksHelper.setNewTask(_newUser.jsonToken)
             }
 
             //Asserting when there are two tasks

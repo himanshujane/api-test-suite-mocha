@@ -11,7 +11,7 @@ export default class Endpoints {
     static get baseURL() {
         if (config.PORT != "") {
             return config.HOSTNAME + ":" + config.PORT
-        } 
+        }
         return config.HOSTNAME
     }
 

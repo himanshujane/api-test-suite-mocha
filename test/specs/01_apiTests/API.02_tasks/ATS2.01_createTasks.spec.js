@@ -19,11 +19,8 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
     tasksData._createTasks.validDataList.forEach(async function (reqData, index) {
         it(`Positive-Creating Multiple tasks given same user. Task: ${index+1} - ${reqData.testName}`, async function () {
 
-            //Adding token to request Header
-            Object.assign(reqData.reqHeader, _newUser.token)
-
             //Making API request and saving response in a variable
-            const res = await tasksHelper.createTasks(this, reqData)
+            const res = await tasksHelper.createTasks(this, reqData, _newUser.jsonToken)
 
             //Asserting the Response
             assert.jsonSchema(res.body, tasksData._createTasks.createTasksSchema)
@@ -42,11 +39,8 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
     tasksData._createTasks.invalidDataList.forEach(async function (reqData, index) {
         it(`Negative-Creating tasks given invalid title: ${index+1} - ${reqData.testName}`, async function () {
 
-            //Adding token to request Header
-            Object.assign(reqData.reqHeader, _newUser.token)
-
             //Making API request and saving response in a variable
-            const res = await tasksHelper.createTasks(this, reqData)
+            const res = await tasksHelper.createTasks(this, reqData, _newUser.jsonToken)
 
             //Asserting the Response
             assert.deepEqual(res.status, tasksData.status[422])
@@ -59,9 +53,6 @@ describe('@API Test Creation of Tasks - Endpoint: ' + endpoints.createTasksURL, 
 
         //Getting Data
         const reqData = tasksData._createTasks.validData
-
-        //Adding token to request Header
-        Object.assign(reqData.reqHeader, tasksData.expiredToken)
 
         //Making API request with expired token and saving response in a variable
         const res = await tasksHelper.createTasks(this, reqData, tasksData.expiredToken)

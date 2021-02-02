@@ -5,10 +5,10 @@ import authData from '../dataProvider/auth.data.js'
 class AuthHelper extends HttpUtil {
 
     /**
-     * This function gets the register user endpoint and register a user.
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} reqData - this contains all the test data to pass in request
-     * @returns {object} - contains user login details
+     * To register a user
+     * @param {object} scope To set context in report.
+     * @param {object} reqData Request body and headers.
+     * @returns {object} User details. [access_token|token_type|expires_in|user_id]
      */
     async registerUser(scope, reqData) {
 
@@ -20,18 +20,19 @@ class AuthHelper extends HttpUtil {
     }
 
     /**
-     * This functions helps to login user and return back login details
-     * @param {object} scope  - this is object of calling testcase which is used to set context in report.
-     * @param {object} userCredential - this contains user credentials 
-     * @returns {object} - contains user login details
+     * To login given user
+     * @param {object} scope To set context in report.
+     * @param {string} email User's Email ID.
+     * @param {string} password User's Password.
+     * @returns {object} User details. [access_token|token_type|expires_in|user_id]
      */
-    async loginUser(scope, userCredential) {
+    async loginUser(scope, email, password) {
 
         //Setting testdata for request
         const reqData = {
             reqBody: {
-                "email": userCredential.email,
-                "password": userCredential.password
+                "email": email,
+                "password": password
             },
             reqHeader: {
                 'Content-Type': 'application/json'
@@ -46,27 +47,27 @@ class AuthHelper extends HttpUtil {
     }
 
     /**
-     * This functions helps to get user details
-     * @param {object} scope  - this is object of calling testcase which is used to set context in report.
-     * @param {object} reqHeader - this contains the request header [token]
-     * @returns {object} - contains user details
+     * To get user details
+     * @param {object} scope To set context in report.
+     * @param {object} jsonToken Token in Json format.
+     * @returns {object} User's details. [data {id|name|email}]
      */
-    async getUser(scope, reqHeader) {
+    async getUser(scope, jsonToken) {
 
         const reqURL = Endpoints.getUserURL
-        const response = await this.get(reqURL, reqHeader)
+        const response = await this.get(reqURL, jsonToken)
 
-        this.setContext(scope, reqURL, reqHeader, response)
+        this.setContext(scope, reqURL, jsonToken, response)
         return response
     }
 
     /**
-     * This functions refreshed the auth token
-     * @param {object} scope  - this is object of calling testcase which is used to set context in report.
-     * @param {object} token - this contains the old token
-     * @returns {object} - contains new token and user id
+     * To refresh auth token
+     * @param {object} scope To set context in report.
+     * @param {object} jsonToken Current Token in JSON format.
+     * @returns {object} New Token and User details. [access_token|token_type|expires_in|user_id]
      */
-    async refreshToken(scope, token) {
+    async refreshToken(scope, jsonToken) {
 
         //Setting testdata for request
         const reqData = {
@@ -75,33 +76,34 @@ class AuthHelper extends HttpUtil {
         }
 
         //Adding token details to request header
-        Object.assign(reqData.reqHeader, token)
+        Object.assign(reqData.reqHeader, jsonToken)
 
         const reqURL = Endpoints.refreshTokenURL
         const response = await this.post(reqURL, reqData)
 
-        this.setContext(scope, reqURL, token, response)
+        this.setContext(scope, reqURL, jsonToken, response)
         return response
     }
 
     /**
-     * This function helps to update user details
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} reqData - contains new user details
-     * @param {object} userDetails - contains existing password, token and user id
-     * @returns {object} - contains updated user details
+     * To update given user details
+     * @param {object} scope To set context in report.
+     * @param {Object} reqData Request body and headers.
+     * @param {object} userIdAndToken User's current Id and token in JSON format.
+     * @param {string} password User's current password.
+     * @returns {object} User's details. [data {id|name|email}]
      */
-    async updateUser(scope, reqData, userDetails) {
+    async updateUser(scope, reqData, userIdAndToken, password) {
 
         //Adding current password to request body
         Object.assign(reqData.reqBody, {
-            "current_password": userDetails.password
+            "current_password": password
         })
 
         //Adding token to request header
-        Object.assign(reqData.reqHeader, userDetails.jsonToken)
+        Object.assign(reqData.reqHeader, userIdAndToken.jsonToken)
 
-        const reqURL = Endpoints.updateUserURL(userDetails.id)
+        const reqURL = Endpoints.updateUserURL(userIdAndToken.id)
         const response = await this.put(reqURL, reqData)
 
         this.setContext(scope, reqURL, reqData, response)
@@ -109,26 +111,27 @@ class AuthHelper extends HttpUtil {
     }
 
     /**
-     * This function deletes a given user
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @param {object} token - user token
-     * @param {number} userId - user id
-     * @returns {object} - contains Ok msg if user is successfully deleted 
+     * To delete given user
+     * @param {object} scope To set context in report.
+     * @param {object} jsonToken Current Token in JSON format.
+     * @param {number} userId User's ID
+     * @returns {object} Response from request
      */
-    async deleteUser(scope, token, userId) {
+    async deleteUser(scope, jsonToken, userId) {
 
-        const reqURL = Endpoints.deleteUserURL(userId) 
-        const response = await this.delete(reqURL, token, "text")
+        const reqURL = Endpoints.deleteUserURL(userId)
+        const response = await this.delete(reqURL, jsonToken, "text")
 
-        this.setContext(scope, reqURL, token, response)
+        this.setContext(scope, reqURL, jsonToken, response)
         return response
     }
 
+    //Helper function for data setup
 
     /**
-     * This function helps to create a new valid user
-     * @param {object} scope - this is object of calling testcase which is used to set context in report.
-     * @returns {object} - New user details
+     * To create a new user
+     * @param {object} scope Optional -To set context in report.
+     * @returns {object} New user details in JSON format [id|name|email|password|jsonToken|token]
      */
     async getNewUser(scope = null) {
 
@@ -146,8 +149,8 @@ class AuthHelper extends HttpUtil {
             name: reqData.reqBody.name,
             email: reqData.reqBody.email,
             password: reqData.reqBody.password,
-            token: JSON.parse(`{"Authorization" : "Bearer ${response.body.access_token}"}`),
-            tokenOnly: response.body.access_token
+            jsonToken: await this.getJsonToken(response.body.access_token),
+            token: response.body.access_token
         }
     }
 }

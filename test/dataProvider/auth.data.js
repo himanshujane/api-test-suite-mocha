@@ -273,10 +273,8 @@ class AuthData extends BaseData {
 
             invalidEmailPasswordList: [{
                     testName: "Empty Email and Password",
-                    userCredential: {
-                        [this.commonKeys.email]: "",
-                        [this.commonKeys.password]: ""
-                    },
+                    [this.commonKeys.email]: "",
+                    [this.commonKeys.password]: "",
                     status: this.status[422],
 
                     expectedErr: {
@@ -287,11 +285,11 @@ class AuthData extends BaseData {
                 },
                 {
                     testName: "Incorrect Email and Password",
-                    userCredential: {
-                        [this.commonKeys.email]: "wrongEmail@test.com",
-                        [this.commonKeys.password]: "wrongPassword"
-                    },
-                    status: this.status[418],
+
+                    [this.commonKeys.email]: "wrongEmail@test.com",
+                    [this.commonKeys.password]: "wrongPassword",
+
+                    status: this.status[401],
                     expectedErr: {
                         [this.commonKeys.message]: undefined,
                         [this.commonKeys.email]: this.commonValues.notInSystem,

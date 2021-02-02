@@ -14,13 +14,13 @@ describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskUR
 
     before('Setting Prerequisite data', async function () {
         _newUser = await authHelper.getNewUser()
-        _newTask = await tasksHelper.setNewTask(_newUser.token)
+        _newTask = await tasksHelper.setNewTask(_newUser.jsonToken)
     })
 
     it(`Positive-Deleting given Task`, async function () {
 
         //Making API request and saving response in a variable
-        const res = await tasksHelper.deleteTask(this, _newUser.token, _newTask.id)
+        const res = await tasksHelper.deleteTask(this, _newUser.jsonToken, _newTask.id)
 
         //Asserting the Response
         assert.deepEqual(res.status, tasksData.status[204])
@@ -30,7 +30,7 @@ describe('@API Test Deleting a given Task - Endpoint: ' + endpoints.deleteTaskUR
         it(`Negative-Deleting given invalid task: ${index+1} - ${test.testName}`, async function () {
 
             //Making API request and saving response in a variable
-            const res = await tasksHelper.deleteTask(this, _newUser.token, test.taskId)
+            const res = await tasksHelper.deleteTask(this, _newUser.jsonToken, test.taskId)
 
             //Asserting the Response
             assert.deepEqual(res.status, tasksData.status[404])

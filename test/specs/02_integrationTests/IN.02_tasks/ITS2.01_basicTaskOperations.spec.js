@@ -7,7 +7,7 @@ import tasksData from '../../../dataProvider/tasks.data.js'
 import snippet from '../IN.00_snippets/SN.01_commonSnippets.js'
 
 
-describe('@Integration -User journey for all the task related operations', function () {
+describe('@INTEGRATION -User journey for all the task related operations', function () {
     var _newUser = Object
     var _newTask1 = Object
     var _newTask2 = Object
@@ -18,11 +18,11 @@ describe('@Integration -User journey for all the task related operations', funct
         _newUser = await authHelper.getNewUser(this)
     })
 
-    it(`Adding Two new tasks`, async function () {
+    it(`Add two new tasks`, async function () {
 
         //Adding two new Tasks
-        _newTask1 = await tasksHelper.setNewTask(_newUser.token)
-        _newTask2 = await tasksHelper.setNewTask(_newUser.token)
+        _newTask1 = await tasksHelper.setNewTask(_newUser.jsonToken, this)
+        _newTask2 = await tasksHelper.setNewTask(_newUser.jsonToken, this)
 
         //Asserting the Response for _newTask1
         assert.isAbove(_newTask1.id, 0)
@@ -36,10 +36,10 @@ describe('@Integration -User journey for all the task related operations', funct
         assert.equal(_newTask2.author.email, _newUser.email)
     })
 
-    it(`Getting all the task`, async function () {
+    it(`Get all the tasks`, async function () {
 
         //Getting All Tasks
-        const res = await tasksHelper.getAllTasks(this, _newUser.token)
+        const res = await tasksHelper.getAllTasks(this, _newUser.jsonToken)
 
         //Asserting the Response
         assert.deepEqual(res.status, tasksData.status[200])
@@ -47,53 +47,52 @@ describe('@Integration -User journey for all the task related operations', funct
         assert.deepEqual(res.body.data[1], _newTask2)
     })
 
-    it(`Getting given specific task`, async function () {
+    it(`Get given specific task`, async function () {
 
         //Getting only first task
-        const res = await tasksHelper.getTask(this, _newUser.token, _newTask1.id)
+        const res = await tasksHelper.getTask(this, _newUser.jsonToken, _newTask1.id)
 
         //Asserting the Response
         assert.deepEqual(res.status, tasksData.status[200])
         assert.deepEqual(res.body.data, _newTask1)
     })
 
-    it(`Updating given specific task`, async function () {
+    it(`Update given specific task`, async function () {
 
         //Getting test data
         _reqDataUpdateTask = tasksData._updateTask.validData
 
         //Making request to update the task1
-        const res = await tasksHelper.updateTask(this, _reqDataUpdateTask, _newUser.token, _newTask1.id)
+        const res = await tasksHelper.updateTask(this, _reqDataUpdateTask, _newUser.jsonToken, _newTask1.id)
 
         //Asserting the Response
         snippet.assert_ITS201_TaskDetails(res, _reqDataUpdateTask, _newTask1.id)
     })
 
-    it(`Getting given updated task`, async function () {
+    it(`Get given updated task`, async function () {
 
         //Getting updated first Task
-        const res = await tasksHelper.getTask(this, _newUser.token, _newTask1.id)
+        const res = await tasksHelper.getTask(this, _newUser.jsonToken, _newTask1.id)
 
         //Asserting the Response
         snippet.assert_ITS201_TaskDetails(res, _reqDataUpdateTask, _newTask1.id)
     })
 
-    it(`Deleting given Task`, async function () {
+    it(`Delete given Task`, async function () {
 
         //Making API request and saving response in a variable
-        const res = await tasksHelper.deleteTask(this, _newUser.token, _newTask1.id)
+        const res = await tasksHelper.deleteTask(this, _newUser.jsonToken, _newTask1.id)
 
         //Asserting the Response
         assert.deepEqual(res.status, tasksData.status[204])
     })
 
-    it(`Getting the deleted task`, async function () {
+    it(`Given task is deleted - validate get task should be unsuccessful`, async function () {
 
         //Getting only first task
-        const res = await tasksHelper.getTask(this, _newUser.token, _newTask1.id)
+        const res = await tasksHelper.getTask(this, _newUser.jsonToken, _newTask1.id)
 
         //Asserting the Response
         assert.deepEqual(res.status, tasksData.status[404])
     })
-
 })
