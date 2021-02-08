@@ -6,7 +6,10 @@
   "scripts": {
     "test": "npx mocha",
     "serial": "npx mocha --no-parallel",
-    "stress": "npx mocha --spec 'test/specs/**/*.spec.js' --grep @STRESS --no-parallel",
+    "prepare": "npx run-func stressFixture.js prepare",
+    "destroy": "npx run-func stressFixture.js destroy",
+    "stressTest": "npx mocha --spec 'test/specs/**/stress/*.spec.js' --grep @STRESS",
+    "stress": "npx run-s prepare stressTest destroy",
     "api": "npx mocha --spec 'test/specs/**/*.spec.js' --grep @API --no-parallel",
     "integration": "npx mocha --spec 'test/specs/**/*.spec.js' --grep @INTEGRATION --no-parallel"
   },
@@ -30,7 +33,8 @@
     "faker": "^5.2.0",
     "mocha": "^8.2.1",
     "mochawesome": "^6.2.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "npm-run-all": "^4.1.5"
   },
   "babel": {
     "presets": [

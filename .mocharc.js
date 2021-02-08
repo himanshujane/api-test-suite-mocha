@@ -25,7 +25,7 @@ module.exports = {
     ],
 
     //Specify "slow" test threshold (in milliseconds) [number]
-    slow: 200,
+    slow: 500,
 
     //Specify test timeout threshold (in milliseconds) [number]
     timeout: 90000,
@@ -40,7 +40,7 @@ module.exports = {
     parallel: true,
     
     //Maximum jobs for parallel run [number]
-    jobs: 15,
+    jobs: 50,
 
     //Retry failed tests this many times [number]
     //retries: 1

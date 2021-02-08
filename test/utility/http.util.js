@@ -15,7 +15,7 @@ export default class HttpUtil extends BaseUtil {
             method: 'POST',
             headers: reqData.reqHeader,
             body: JSON.stringify(reqData.reqBody),
-            timeout: 20000
+            timeout: 30000
         }
         console.log("Making POST Request to : ", reqURL)
         return fetch(reqURL, requestOptions).then(this.handleResponse)
@@ -50,7 +50,7 @@ export default class HttpUtil extends BaseUtil {
         const requestOptions = {
             method: 'GET',
             headers: reqHeader,
-            timeout: 20000
+            timeout: 30000
         }
         console.log("Making GET Request to : ", reqURL)
         return fetch(reqURL, requestOptions).then(this.handleResponse)
