@@ -1,12 +1,15 @@
 module.exports = {
-    
+
     //Define Environment
-    HOSTNAME : process.env.HOSTNAME ? process.env.HOSTNAME : 'http://localhost',
+    HOSTNAME: process.env.HOSTNAME ? process.env.HOSTNAME : 'http://localhost',
     PORT: process.env.PORT ? process.env.PORT : '8000',
 
     //Define specs for test execution.[array]
-    spec: ["test/specs/01*/**/*.spec.js","test/specs/02*/**/*.spec.js"],
-    
+    spec: process.env.SPEC ? process.env.SPEC.split(",") : [
+        "**/01*/**/*.spec.js",
+        "**/02*/**/*.spec.js"
+    ],
+
     //Show the difference between expected and actual values when an assertion failure is encountered [boolean]
     diff: true,
 
@@ -38,7 +41,7 @@ module.exports = {
 
     //Run tests in parallel [boolean]
     parallel: true,
-    
+
     //Maximum jobs for parallel run [number]
     jobs: 50,
 

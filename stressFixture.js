@@ -33,9 +33,9 @@ module.exports.prepare = function () {
  */
 module.exports.destroy = function () {
 
-    var lowest = 30000
-    var highest = 0
-    var totalTimeTaken = 0
+    var timeTaken = []
+    var timeTakenSorted = []
+    var mean
 
     //Deletes folder 'stress'
     fs.rmdir(_tempStressFolder, {
@@ -53,17 +53,26 @@ module.exports.destroy = function () {
 
         var result = JSON.parse(data)
 
-        result.results[0].suites.forEach(function (listOfScripts, index) {
-
-            listOfScripts.tests.forEach(function (listOfTests, index) {
-
-                let timeTaken = listOfTests.duration
-                if (timeTaken > highest) highest = timeTaken
-                if (timeTaken < lowest) lowest = timeTaken
-                totalTimeTaken += timeTaken
+        //Loop through report.json to collect response time matrix into an array for each test
+        result.results[0].suites.forEach(function (listOfScripts) {
+            listOfScripts.tests.forEach(function (listOfTests) {
+                timeTaken.push(listOfTests.duration)
             })
         })
-        let mean = totalTimeTaken / result.stats.testsRegistered
-        console.log(`Lowest : ${lowest} | Highest : ${highest} | Mean : ${mean}`)
+
+
+        //Sorting matrix from low to high
+        timeTakenSorted = timeTaken.sort(function (a, b) {
+            return a - b
+        })
+
+        function findTotal(total, num) {
+            return total + num;
+        }
+
+        //Finding mean response time
+        mean = timeTaken.reduce(findTotal) / timeTaken.length
+
+        console.log(`Lowest : ${timeTakenSorted[0]} | Highest : ${timeTakenSorted[timeTakenSorted.length-1]} | Mean : ${mean}`)
     })
 }
